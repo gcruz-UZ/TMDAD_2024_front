@@ -42,3 +42,21 @@ Accede en un navegador a través de:
 http://localhost:3000
 ```
 
+## Compilar
+
+Al desarrollar, para que los cambios tengan efecto en el navegador, hay que navegar al directorio:
+
+```
+cd TMDAD_2024_front/public
+```
+
+y ejecutar:
+
+```
+npm run build
+```
+
+Tras ello, se puede volver a lanzar el servidor con el comando de la sección anterior.
+
+
+
