@@ -75,16 +75,70 @@ const RoomPanel = (props) => {
           data: { rooms: props.userInfo.rooms },
         }
 
-        const res = await connectBackend(config)
 
-        // sort the data based on dates
-        res.data = res.data.sort((a, b) => {
-          return new Date(b.dateInfo) - new Date(a.dateInfo)
-        })
+
+
+
+        // const res = await connectBackend(config)
+
+
+
+
+
+
+		
+
+        // // // // // // sort the data based on dates
+        // // // // // res.data = res.data.sort((a, b) => {
+        // // // // //   return new Date(b.dateInfo) - new Date(a.dateInfo)
+        // // // // // })
+
+		const output = []
+
+		if (props.userInfo.rooms.length > 0) {
+			props.userInfo.rooms.forEach((ele, index) => {
+				output.push({
+					roomName: ele.name,
+					roomId: ele.id,
+					// lastMessage: ele.lastMessage ? ele.lastMessage.msgBody : [],
+					lastMessage: "Last message",
+					// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
+					dateInfo: "NA",
+					// senderId: ele.lastMessage ? ele.lastMessage.senderId : "NA",
+					senderId: "NA",
+					// partnerId: rooms[index].partnerId || "NA",
+					partnerId: "NA",
+					// read: rooms[index].read,
+					read: false,
+				})
+			})
+		}
+
+
+
+
+
+		// // output.push({
+		// // 	// roomName: rooms[index].roomName,
+		// // 	roomName: "FEDERICO",
+		// // 	// roomId: ele._id,
+		// // 	roomId: 1,
+		// // 	// lastMessage: ele.lastMessage ? ele.lastMessage.msgBody : [],
+		// // 	lastMessage: "tu vieja",
+		// // 	// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
+		// // 	dateInfo: "NA",
+		// // 	// senderId: ele.lastMessage ? ele.lastMessage.senderId : "NA",
+		// // 	senderId: "NA",
+		// // 	// partnerId: rooms[index].partnerId || "NA",
+		// // 	partnerId: "NA",
+		// // 	// read: rooms[index].read,
+		// // 	read: true,
+		// // })
 
         // set necessary state variables
         setRoomPanelData((prevState) => {
-          return { ...prevState, rooms: res.data, showLoading: false }
+        // //   return { ...prevState, rooms: res.data, showLoading: false }
+          return { ...prevState, rooms: output, showLoading: false }
         })
         setShouldLoadRooms(false)
       } catch (err) {
@@ -97,7 +151,37 @@ const RoomPanel = (props) => {
     props.setSelectedRoomId(id)
     // set active room id for highlighting purpose
     setActiveRoomId(id)
-    changeReadStatus(id)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // // // // // //changeReadStatus(id)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }
 
   // function to change the room status from read / unread

@@ -89,14 +89,14 @@ const Login = (props) => {
 			setLoginData({ ...loginData, showLoading: false })
 
 			showSuccessComponent()
+			console.log("OE OE OE OE OE OE")
+			// // // // // // // reload the page
+			// // // // // // setTimeout(() => {
+			// // // // // // 	location.reload()
+			// // // // // // }, 2000)
 
-			// reload the page
-			setTimeout(() => {
-				location.reload()
-			}, 2000)
-
-			// // send the logged in user's data to parent
-			// props.onSuccessLogin(res.data)
+			// send the logged in user's data to parent
+			props.onSuccessLogin(res.data)
 		} else {
 			// show the error message
 			showErrorComponent()
