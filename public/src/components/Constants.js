@@ -9,6 +9,7 @@ const Constants = () => {
     kotlinLogin: `${kotlinUrl}/login`,
 
     getConversation: `${url}/getconversation/{id}`,
+	getKotlinConversation: `${kotlinUrl}/rooms/{id}/messages`,
     getRooms: `${url}/getrooms/{id}`,
     saveReadStatus: `${url}/updateroomreadstatus`,
 

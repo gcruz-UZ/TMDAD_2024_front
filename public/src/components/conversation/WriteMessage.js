@@ -14,15 +14,15 @@ const WriteMessage = (props) => {
       // define the chat message
       const data = {
         timeSent: new Date().toISOString(),
-        // msgBody: state.message.replace(state.message.charAt(state.message.length - 1), ""),
-        msgBody: writeMessageData.message,
-        senderId: props.userInfo.userId,
+        // body: state.message.replace(state.message.charAt(state.message.length - 1), ""),
+        body: writeMessageData.message,
+        userId: props.userInfo.id,
         roomId: props.selectedRoomId,
         id: uuidv4(),
       }
 
       // emit the message
-      if (data.msgBody.length > 0) {
+      if (data.body.length > 0) {
         socket.emit("message", data)
       }
 

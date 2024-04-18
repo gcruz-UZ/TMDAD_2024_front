@@ -5,7 +5,7 @@ const RoomInfo = ({
   roomName,
   lastMessage,
   dateInfo,
-  senderId,
+  userId,
   userInfo,
   setSelectedRoomId,
   activeRoomId,
@@ -35,7 +35,7 @@ const RoomInfo = ({
       <div className="room-name">
         {roomName}
         <div className={readStyle}>
-          {userInfo == senderId
+          {userInfo == userId
             ? `You: ${lastMessage.substr(0, 96)}`
             : lastMessage.substr(0, 100)}
         </div>

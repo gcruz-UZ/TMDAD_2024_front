@@ -25,8 +25,9 @@ const Content = (props) => {
   const onConnect = () => {
     socket.on("connect", () => {
       console.log("Socket connected FROM React...")
+	  console.log("onlineUser", props.userInfo.id)
       // emit all the room ids where the user belongs to see him / her as active
-      socket.emit("onlineUser", props.userInfo.userId)
+      socket.emit("onlineUser", props.userInfo.id)
     })
   }
 

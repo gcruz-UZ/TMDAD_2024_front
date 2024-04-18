@@ -1,13 +1,13 @@
 // Constants
 import Constants from "../Constants"
 
-const Message = ({ msgBody, timeSent, senderId, userInfo }) => {
+const Message = ({ body, timeSent, userId, userInfo }) => {
   const allConstants = Constants()
   return (
     <div
-      className={senderId == userInfo.userId ? "msg my-msg" : "msg room-msg"}
+      className={userId == userInfo.id ? "msg my-msg" : "msg room-msg"}
     >
-      {msgBody}
+      {body}
       <span className="time-sent">{allConstants.formatDates(timeSent)}</span>
     </div>
   )

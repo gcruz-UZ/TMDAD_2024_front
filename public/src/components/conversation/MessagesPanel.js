@@ -5,6 +5,7 @@ import Message from "./Message"
 import WriteMessage from "./WriteMessage"
 import Loading from "../Loading"
 import { connectBackend } from "../connectBackend"
+import { connectKotlinBackend } from "../connectKotlinBackend"
 
 // Constants
 import Constants from "../Constants"
@@ -54,10 +55,20 @@ const MessagesPanel = (props) => {
     try {
       const config = {
         method: allConstants.method.GET,
-        url: allConstants.getConversation.replace("{id}", id),
+        url: allConstants.getKotlinConversation.replace("{id}", id),
         header: allConstants.header,
       }
-      const res = await connectBackend(config)
+    // //   const res = await connectBackend(config)
+
+	console.log("CONNECTING KOTLIN BACKEND 1 - GET MESSAGES BY ROOM")
+	const res = await connectKotlinBackend(config)
+	console.log("CONNECTING KOTLIN BACKEND 2 - GET MESSAGES BY ROOM")
+
+	console.log("PRINT MESSAGES 1")
+	res.data.map((message) => {
+		console.log(message)
+	  })
+	console.log("PRINT MESSAGES 2")
 
       // set the messages field of the state with the data
       setMessagePanelData((prevState) => {
