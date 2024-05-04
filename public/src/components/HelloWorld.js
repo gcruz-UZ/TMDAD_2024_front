@@ -18,7 +18,7 @@ const HelloWorld = () => {
 		// // const stompClient = Stomp.over(socket);
 
 		const stompClient = new Client({
-			brokerURL: 'ws://localhost:8080/gs-guide-websocket',
+			brokerURL: 'ws://localhost:8080/ws',
 		});
 
 		setStompClient(stompClient); // Set the stompClient state
@@ -69,7 +69,7 @@ const HelloWorld = () => {
 				console.error('Stomp client not initialized');
 				return;
 			  }
-			  
+
 			// Assuming you're using some form of input for the name
 			const name = document.getElementById('nameInput').value;
 			stompClient.publish({
