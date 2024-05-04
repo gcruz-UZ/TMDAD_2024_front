@@ -72,3 +72,5 @@ Instala:
 npm install @stomp/stompjs sockjs-client
 ```
 
+Y luego vuelve a compilar como se explica en la sección *Compilar*
+
