@@ -1,29 +1,25 @@
 import { useState } from "react"
-import { v4 as uuidv4 } from "uuid"
+// import { v4 as uuidv4 } from "uuid"
 
 const WriteMessage = (props) => {
   // Initialize the initial state and its modifier function
   const [writeMessageData, setWriteMessageData] = useState({ message: "" })
 
   // initialize the socket
-  const socket = props.socket
+  const stompClient = props.stompClient
 
   // if the ENTER key is pressed emit the message
   const sendMessage = (e) => {
     if ((e.keyCode == 13 || e.which == 13) && !e.ctrlKey) {
-      // define the chat message
-      const data = {
-        timeSent: new Date().toISOString(),
-        // body: state.message.replace(state.message.charAt(state.message.length - 1), ""),
-        body: writeMessageData.message,
-        userId: props.userInfo.id,
-        roomId: props.selectedRoomId,
-        id: uuidv4(),
-      }
-
       // emit the message
-      if (data.body.length > 0) {
-        socket.emit("message", data)
+      if (writeMessageData.message.length > 0) {
+		stompClient.publish({
+			destination: "/app/message",
+			body: JSON.stringify({
+				'body': writeMessageData.message, 
+				'userId': props.userInfo.id, 
+				'roomId': props.selectedRoomId})
+		});
       }
 
       // reset the textarea value

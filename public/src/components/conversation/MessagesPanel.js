@@ -58,17 +58,8 @@ const MessagesPanel = (props) => {
         url: allConstants.getKotlinConversation.replace("{id}", id),
         header: allConstants.header,
       }
-    // //   const res = await connectBackend(config)
 
-	console.log("CONNECTING KOTLIN BACKEND 1 - GET MESSAGES BY ROOM")
 	const res = await connectKotlinBackend(config)
-	console.log("CONNECTING KOTLIN BACKEND 2 - GET MESSAGES BY ROOM")
-
-	console.log("PRINT MESSAGES 1")
-	res.data.map((message) => {
-		console.log(message)
-	  })
-	console.log("PRINT MESSAGES 2")
 
       // set the messages field of the state with the data
       setMessagePanelData((prevState) => {
@@ -89,7 +80,8 @@ const MessagesPanel = (props) => {
       props.newMessageFromSocket &&
       props.newMessageFromSocket.id !== lastMsgSocketId
     ) {
-      const { roomId, id } = props.newMessageFromSocket
+		const { roomId, id } = props.newMessageFromSocket
+
       // if the current message is from the selected room also
       if (roomId == messagePanelData.selectedRoomId) {
         setMessagePanelData((prevState) => {
@@ -128,7 +120,7 @@ const MessagesPanel = (props) => {
         isDisabled={disableTextArea}
         userInfo={userInfo}
         selectedRoomId={selectedRoomId}
-        socket={props.socket}
+        stompClient={props.stompClient}
       />
     </div>
   )
