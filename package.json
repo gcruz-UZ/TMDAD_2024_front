@@ -34,12 +34,14 @@
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "helmet": "^4.6.0",
     "mongodb": "^4.2.2",
     "morgan": "^1.10.0",
-    "socket.io": "^4.4.0"
+    "socket.io": "^4.4.0",
+    "sockjs-client": "^1.6.1"
   }
 }

@@ -5,6 +5,7 @@ import Header from "./components/layout/Header"
 import Content from "./components/Content"
 import Footer from "./components/layout/Footer"
 import Login from "./components/login/Login"
+import HelloWorld from "./components/HelloWorld"
 
 // css
 import "./css/style.css"
@@ -33,7 +34,8 @@ const App = () => {
       {/* including the Title and other components */}
       <Header userInfo={userInfo} />
       {showContent == false ? (
-        <Login onSuccessLogin={onSuccessLogin} />
+        // <Login onSuccessLogin={onSuccessLogin} />
+        <HelloWorld onSuccessLogin={onSuccessLogin} />
       ) : (
         <Content
           userInfo={userInfo}

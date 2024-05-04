@@ -58,5 +58,17 @@ npm run build
 
 Tras ello, se puede volver a lanzar el servidor con el comando de la sección anterior.
 
+## Para que funcione WebSockets, importante (StompJS)
 
+Navega dentro del directorio:
+
+```
+cd TMDAD_2024_front
+```
+
+Instala:
+
+```
+npm install @stomp/stompjs sockjs-client
+```
 
