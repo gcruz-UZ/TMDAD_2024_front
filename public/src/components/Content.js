@@ -36,8 +36,12 @@ const Content = (props) => {
 		setConnected(true);
 		console.log('Connected: ' + frame);
 		console.log("onlineUser", props.userInfo.id)
-		stompClient.subscribe('/topic/messages/' + props.userInfo.login, (greeting) => {
-			fillRoomInfoFromSocket(JSON.parse(greeting.body))
+		stompClient.subscribe('/topic/messages/' + props.userInfo.login, (msg) => {
+			fillRoomInfoFromSocket(JSON.parse(msg.body))
+		});
+
+		stompClient.subscribe('/topic/trendings', (trending) => {
+			console.log(trending.body)
 		});
 	};
 
