@@ -73,8 +73,10 @@ const Login = (props) => {
 	  	// // console.log("CONNECTING BACKEND 2")
 
 		const config = {
+			withCredentials: true,
 			method: allConstants.method.POST,
-			url: allConstants.kotlinLogin,
+			// url: allConstants.kotlinLogin,
+			url: allConstants.kotlinSignin,
 			header: allConstants.header,
 			data: { username, password },
 		}		

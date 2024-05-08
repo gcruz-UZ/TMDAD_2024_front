@@ -2,11 +2,13 @@
 const Constants = () => {
   const url = "http://localhost:3000/services"
   const kotlinUrl = "http://localhost:8080/api"
+  const kotlinAuthUrl = "http://localhost:8080/api/auth"
   return {
     // all the URLs
     url,
     login: `${url}/login`,
     kotlinLogin: `${kotlinUrl}/login`,
+    kotlinSignin: `${kotlinAuthUrl}/signin`,
 
     getConversation: `${url}/getconversation/{id}`,
 	getKotlinConversation: `${kotlinUrl}/rooms/{id}/messages`,

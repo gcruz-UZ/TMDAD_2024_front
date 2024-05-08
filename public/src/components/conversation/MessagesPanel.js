@@ -25,6 +25,8 @@ const MessagesPanel = (props) => {
   const allConstants = Constants()
   const messageEnd = useRef(null)
 
+  const [cookies, setCookies] = useState({});
+
   // when the component is mounted
   useEffect(() => {
     if (
@@ -54,6 +56,7 @@ const MessagesPanel = (props) => {
     })
     try {
       const config = {
+		withCredentials: true,
         method: allConstants.method.GET,
         url: allConstants.getKotlinConversation.replace("{id}", id),
         header: allConstants.header,
