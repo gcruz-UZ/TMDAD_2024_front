@@ -15,12 +15,14 @@ const RoomPanel = (props) => {
     showLoading: true,
   })
   const [lastMsgFromSocketId, setLastMsgFromSocketId] = useState("")
+  const [lastRoomFromSocketId, setLastRoomFromSocketId] = useState("")
   const [shouldLoadrooms, setShouldLoadRooms] = useState(true)
   const [activeRoomId, setActiveRoomId] = useState(props.selectedRoomId)
   // instantiate the Constants
   const allConstants = Constants()
 
   useEffect(() => {
+	console.log("HOLA")
     loadrooms()
     onMessageArrival()
   })
@@ -145,6 +147,27 @@ const RoomPanel = (props) => {
         console.log("some error occurred....", err)
       }
     }
+
+	if(props.newRoomFromSocket && props.newRoomFromSocket.id !== lastRoomFromSocketId)
+	{
+		console.log("NEW ROOM")
+		console.log(props.newRoomFromSocket)
+		setLastRoomFromSocketId(props.newRoomFromSocket.id)
+		roomPanelData.rooms.push({
+			roomName: props.newRoomFromSocket.name,
+			roomId: props.newRoomFromSocket.id,
+			// lastMessage: ele.lastMessage ? ele.lastMessage.body : [],
+			lastMessage: "Last message",
+			// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
+			dateInfo: "NA",
+			// userId: ele.lastMessage ? ele.lastMessage.userId : "NA",
+			userId: "NA",
+			// partnerId: rooms[index].partnerId || "NA",
+			partnerId: "NA",
+			// read: rooms[index].read,
+			read: false,
+		})
+	}
   }
   // pass the selected room id augmented with logged in userid to the parent
   const setSelectedRoomId = (id) => {
@@ -226,6 +249,7 @@ const RoomPanel = (props) => {
         <Loading />
       ) : (
         rooms.map((room) => {
+			console.log(room.roomId)
           return (
             <RoomInfo
               key={room.roomId}

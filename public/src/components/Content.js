@@ -10,7 +10,7 @@ const Content = (props) => {
   const [contentData, setContentData] = useState({
     showMessagePanel: true,
     showRoomPanel: true,
-    onlineRooms: [],
+    onlineRooms: []
   })
 
    // Define stompClient as a state variable
@@ -42,6 +42,11 @@ const Content = (props) => {
 
 		stompClient.subscribe('/topic/trendings', (trending) => {
 			console.log(trending.body)
+		});
+
+		stompClient.subscribe('/topic/rooms/' + props.userInfo.login, (room) => {
+			console.log(JSON.parse(room.body))
+			fillNewRoomFromSocket(JSON.parse(room.body))
 		});
 	};
 
@@ -115,7 +120,11 @@ const Content = (props) => {
   }
 
   const fillRoomInfoFromSocket = (message) => {
-    setContentData({ ...contentData, newMessageFromSocket: message })
+	setContentData({ ...contentData, newMessageFromSocket: message })
+  }
+
+  const fillNewRoomFromSocket = (room) => {
+    setContentData({ ...contentData, newRoomFromSocket: room })
   }
 
   const notifyOnlineRooms = (rooms) => {
@@ -129,6 +138,7 @@ const Content = (props) => {
     selectedRoomId,
     newMessageFromSocket,
     onlineRooms,
+	newRoomFromSocket,
   } = contentData
 
   if (window.innerWidth < 500 && props.showBackButton == false) {
@@ -143,6 +153,7 @@ const Content = (props) => {
         userInfo={userInfo}
         onlineRooms={onlineRooms}
         newMessageFromSocket={newMessageFromSocket}
+		newRoomFromSocket={newRoomFromSocket}
         selectedRoomId={selectedRoomId}
         setSelectedRoomId={setSelectedRoomId}
       />
