@@ -35,6 +35,8 @@
 
   --light-shadow: rgba(0, 0, 0, 0.4);
   --lighter-shadow: rgba(0, 0, 0, 0.2);
+
+  --upload-file-button: #4fd53d;
 }
 
 body {
@@ -380,7 +382,42 @@ input[type="text"]:focus {
   color: var(--lightest-black); /*#797676;*/
 }
 
-/* message writing div related styles */
+
+
+
+
+
+
+
+.chat-input-container {
+	display: flex;
+	align-items: center;  /* Centers the elements vertically */
+	gap: 10px;           /* Adds some space between the file input and the textarea */
+}
+
+.file-upload-button {
+	padding: 0.5em 1em;
+	background-color: var(--upload-file-button);  /* Adjust the color to fit your theme */
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 0.8em;
+	align-self: end;  /* Aligns with the bottom of the textarea */
+	box-shadow: 0 0 3px var(--light-shadow);
+	transition: background-color 0.3s ease;
+  }
+
+.file-upload-button:hover,
+.file-upload-button:focus {
+  background-color: var(--button-hover-color);  /* Lighter or darker depending on your theme */
+}
+
+.file-upload-input {
+	display: none;  /* Keeps the input hidden */
+}
+
+/* message writing div related styles
 .msg-write-div {
   align-self: end;
   padding: 1em;
@@ -392,7 +429,19 @@ input[type="text"]:focus {
 
   overflow-y: hidden;
   height: 77px;
-}
+} */
+
+.msg-write-div {
+	flex-grow: 1;
+	padding: 1em;
+	font-size: 0.8em;
+	font-family: inherit;
+	border: 1px solid var(--light-purple);
+	border-radius: 2px;
+	overflow-y: hidden;
+	height: 77px;
+  }
+
 
 .msg-write-div:hover,
 .msg-write-div:focus {
@@ -406,6 +455,18 @@ textarea {
   border: 0;
   outline: 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Loading image related */
 .loading-div {

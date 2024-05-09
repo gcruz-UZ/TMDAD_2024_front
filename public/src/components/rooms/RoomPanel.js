@@ -22,7 +22,6 @@ const RoomPanel = (props) => {
   const allConstants = Constants()
 
   useEffect(() => {
-	console.log("HOLA")
     loadrooms()
     onMessageArrival()
   })
@@ -249,7 +248,7 @@ const RoomPanel = (props) => {
         <Loading />
       ) : (
         rooms.map((room) => {
-			console.log(room.roomId)
+			// console.log(room.roomId)
           return (
             <RoomInfo
               key={room.roomId}

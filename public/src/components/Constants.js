@@ -15,6 +15,8 @@ const Constants = () => {
     getRooms: `${url}/getrooms/{id}`,
     saveReadStatus: `${url}/updateroomreadstatus`,
 
+	uploadFile: `${kotlinUrl}/messages/fileUpload`,
+
     // the Content-Type
     header: { "Content-Type": "application/json" },
 
