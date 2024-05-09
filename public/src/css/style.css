@@ -461,7 +461,15 @@ textarea {
 
 
 
-
+.clickable-file {
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+  }
+  
+  .clickable-file:hover {
+	color: darkblue; /* Change color on hover */
+  }
 
 
 
