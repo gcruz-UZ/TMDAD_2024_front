@@ -91,7 +91,9 @@ const Login = (props) => {
 			setLoginData({ ...loginData, showLoading: false })
 
 			showSuccessComponent()
-			console.log("OE OE OE OE OE OE")
+			// // // // console.log("OE OE OE OE OE OE")
+			// // // // console.log(res.data.token)
+			// // // // console.log("OE OE OE OE OE OE")
 			// // // // // // // reload the page
 			// // // // // // setTimeout(() => {
 			// // // // // // 	location.reload()

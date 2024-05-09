@@ -26,6 +26,9 @@ const Content = (props) => {
 
 	const stompClient = new Client({
 		brokerURL: 'ws://localhost:8080/ws',
+		connectHeaders: {
+			"Authorization": "Bearer " + props.userInfo.token
+		  },
 	});
 
 	// Set the stompClient state
