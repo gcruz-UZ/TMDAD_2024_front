@@ -71,13 +71,7 @@ body {
   cursor: pointer;
   font-size: 1.5em;
 }
-
-/* Content related */
-.content {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  height: calc(100vh - 70px);
-}
+  
 
 /* title of the application related */
 .title {
@@ -230,10 +224,30 @@ input[type="text"]:focus {
   opacity: 0.6;
 }
 
+/* Content related */
+.content {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	height: calc(100vh - 70px);
+  }
+
+  .left-column {
+	display: grid;
+	grid-template-rows: repeat(3, 1fr); /* Three rows with equal height */
+	height: calc(100vh - 70px);
+  }
+
 /* Rooms panel related styles */
 .rooms-panel {
   overflow-x: hidden;
   overflow-y: auto;
+  height: calc(100vh - 70px);
+}
+
+.rooms-panel-superuser {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc(50vh);
 }
 
 .room-info {
@@ -241,6 +255,14 @@ input[type="text"]:focus {
   display: grid;
   grid-template-columns: 1fr 5fr 1fr;
   margin-bottom: 10px;
+}
+
+.trending-info {
+	position: relative;
+	display: grid;
+	grid-template-columns: 1fr 5fr 1fr;
+	margin-bottom: 10px;
+	height: calc(10vh);
 }
 
 .room-initials {
@@ -252,6 +274,17 @@ input[type="text"]:focus {
   text-transform: uppercase;
   position: relative;
 }
+
+.trending-initials {
+	border-radius: 50px;
+	background-color: #000000;
+	border: solid 1px var(--dark-grey);
+	align-self: center;
+	justify-self: center;
+	padding: 0.5em;
+	text-transform: uppercase;
+	position: relative;
+  }
 
 .online-mark {
   background-color: var(--light-purple);
@@ -273,6 +306,12 @@ input[type="text"]:focus {
   cursor: pointer;
 }
 
+.trending-info:hover,
+.trending-info:focus {
+  background-color: var(--lightest-purple);
+  cursor: pointer;
+}
+
 .room-icon-div {
   justify-self: center;
   display: grid;
@@ -290,6 +329,15 @@ input[type="text"]:focus {
   padding: 0.6em;
   color: var(--darker-grey);
 }
+
+.trending-name {
+	font-size: 0.9em;
+	padding: 0.6em;
+	justify-self: center;
+	align-self: center;
+	font-weight: var(--font-weight-bold);
+	color: var(--darker-grey);
+  }
 
 .last-message {
   font-size: 0.75em;

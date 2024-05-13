@@ -36,7 +36,12 @@ const MessagesPanel = (props) => {
       // load the messages when the nextProps is different from the present one
       loadConversation(props.selectedRoomId)
     }
-    scrollToBottom()
+
+	//Necesario porq si no me daba error al cambiar de las de trends/stats a la room normal
+	if(messageEnd.current != null)
+	{
+		scrollToBottom()
+	}
     processNewMessage()
   })
 
@@ -46,7 +51,42 @@ const MessagesPanel = (props) => {
 
   // load the conversation of the selected friend
   const loadConversation = async (id) => {
-	if(props.selectedRoomId == -1)
+	if(props.selectedRoomId == allConstants.trendingsId || props.selectedRoomId == allConstants.statsId)
+	{
+		//Es la de trends o stats
+		setMessagePanelData((prevState) => {
+			return {
+			...prevState,
+			showLoading: true,
+			disableTextArea: true,
+			selectedRoomId: id,
+			}
+		})
+		try {
+			// const config = {
+			// withCredentials: true,
+			// method: allConstants.method.GET,
+			// url: allConstants.getKotlinAdConversation,
+			// header: allConstants.header,
+			// }
+
+			// const res = await connectKotlinBackend(config)
+
+			// set the messages field of the state with the data
+			setMessagePanelData((prevState) => {
+			return {
+				...prevState,
+				showLoading: false,
+				disableTextArea: false,
+				// messages: res.data,
+				messages: [],
+			}
+			})
+		} catch (err) {
+			console.log("Error occurred...", err)
+		}
+	}
+	else if(props.selectedRoomId == allConstants.adId)
 	{
 		//Es la de PUBLI
 		setMessagePanelData((prevState) => {
@@ -145,24 +185,44 @@ const MessagesPanel = (props) => {
   const messageStyle =
     showMessagePanel == true ? "message-panel" : "message-panel hide-div"
 
+// console.log("Selected ROOM ID from MESSAGES PANEL: ", selectedRoomId)
+
+// console.log("oli oli")
+
+let messagesPanelBody = <div className="show-messages">
+	{showLoading == true ? (
+	<Loading />
+	) : (
+	messagePanelData.messages.map((message) => {
+		return <Message key={message.id} {...message} userInfo={userInfo} />
+	})
+	)}
+	<div style={{ float: "left", clear: "both" }} ref={messageEnd}></div>
+	</div>
+
+let messagesPanelWrite = <WriteMessage
+	isDisabled={disableTextArea}
+	userInfo={userInfo}
+	selectedRoomId={selectedRoomId}
+	stompClient={props.stompClient}
+/>
+
+//En funcion de si hemos escogido trends o stats no mostramos mensajes ni cuadro de escritura
+if(selectedRoomId == allConstants.trendingsId)
+{
+	messagesPanelBody = props.newTrendingsFromSocket
+	messagesPanelWrite = ""
+}
+else if(selectedRoomId == allConstants.statsId)
+{
+	messagesPanelBody = props.newStatsFromSocket
+	messagesPanelWrite = ""
+}
+
   return (
     <div className={messageStyle}>
-      <div className="show-messages">
-        {showLoading == true ? (
-          <Loading />
-        ) : (
-          messagePanelData.messages.map((message) => {
-            return <Message key={message.id} {...message} userInfo={userInfo} />
-          })
-        )}
-        <div style={{ float: "left", clear: "both" }} ref={messageEnd}></div>
-      </div>
-      <WriteMessage
-        isDisabled={disableTextArea}
-        userInfo={userInfo}
-        selectedRoomId={selectedRoomId}
-        stompClient={props.stompClient}
-      />
+      {messagesPanelBody}
+      {messagesPanelWrite}
     </div>
   )
 }

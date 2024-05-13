@@ -28,6 +28,10 @@ const Constants = () => {
       PUT: "PUT",
     },
 
+	adId: -1,
+	trendingsId: -2,
+	statsId: -3,
+
     // initialize
     // theWeek: makeFormattedWeek(),
 

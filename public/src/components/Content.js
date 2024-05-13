@@ -3,7 +3,12 @@ import { Client } from '@stomp/stompjs';
 
 // components
 import RoomPanel from "./rooms/RoomPanel"
+import TrendsInfo from "./rooms/TrendsInfo"
+import StatsInfo from "./rooms/StatsInfo"
 import MessagesPanel from "./conversation/MessagesPanel"
+
+// Constants
+import Constants from "./Constants"
 
 const Content = (props) => {
   // Initialize the initial data and its modifier
@@ -16,6 +21,8 @@ const Content = (props) => {
    // Define stompClient as a state variable
   const [stompClient, setStompClient] = useState(null);
   const [connected, setConnected] = useState(false);
+
+  const allConstants = Constants()
 
 // // // //   const socket = io()
   useEffect(() => {
@@ -47,8 +54,12 @@ const Content = (props) => {
 			fillRoomInfoFromSocket(JSON.parse(msg.body))
 		});
 
-		stompClient.subscribe('/topic/trendings', (trending) => {
-			console.log(trending.body)
+		stompClient.subscribe('/topic/trendings', (msg) => {
+			fillNewTrendingsFromSocket(msg.body)
+		});
+
+		stompClient.subscribe('/topic/stats', (msg) => {
+			fillNewStatsFromSocket(msg.body)
 		});
 
 		stompClient.subscribe('/topic/rooms/' + props.userInfo.login, (room) => {
@@ -130,13 +141,22 @@ const Content = (props) => {
 	if(message.isAd)
 	{
 		//Para que se actualice en la room ficticia de publi
-		message.roomId = -1
+		message.roomId = allConstants.adId
 	}
-	setContentData({ ...contentData, newMessageFromSocket: message })
+	// toggleMessagePanel(true, false)
+	setContentData({ ...contentData, newMessageFromSocket: message})
   }
 
   const fillNewRoomFromSocket = (room) => {
     setContentData({ ...contentData, newRoomFromSocket: room })
+  }
+
+  const fillNewTrendingsFromSocket = (trendings) => {
+    setContentData({ ...contentData, newTrendingsFromSocket: trendings })
+  }
+
+  const fillNewStatsFromSocket = (stats) => {
+    setContentData({ ...contentData, newStatsFromSocket: stats })
   }
 
   const notifyOnlineRooms = (rooms) => {
@@ -151,6 +171,8 @@ const Content = (props) => {
     newMessageFromSocket,
     onlineRooms,
 	newRoomFromSocket,
+	newTrendingsFromSocket,
+	newStatsFromSocket,
   } = contentData
 
   if (window.innerWidth < 500 && props.showBackButton == false) {
@@ -158,27 +180,66 @@ const Content = (props) => {
     showRoomPanel = true
   }
 
+  let leftPanel = <div className="left-column">
+						<RoomPanel
+							showRoomPanel={showRoomPanel}
+							userInfo={userInfo}
+							onlineRooms={onlineRooms}
+							newMessageFromSocket={newMessageFromSocket}
+							newRoomFromSocket={newRoomFromSocket}
+							selectedRoomId={selectedRoomId}
+							setSelectedRoomId={setSelectedRoomId}
+						/>
+
+						<TrendsInfo
+									roomName = "TRENDINGS"
+									setSelectedRoomId={setSelectedRoomId}
+									selectedRoomId={selectedRoomId}
+									roomId={allConstants.trendingsId}
+									onlineRooms={onlineRooms}
+									partnerId={6556}
+									read={false}/>
+						<StatsInfo
+									roomName = "STATS"
+									setSelectedRoomId={setSelectedRoomId}
+									selectedRoomId={selectedRoomId}
+									roomId={allConstants.statsId}
+									onlineRooms={onlineRooms}
+									partnerId={6556}
+									read={false}/>
+
+					</div>
+
+let rightPanel = <MessagesPanel
+					showMessagePanel={showMessagePanel}
+					selectedRoomId={selectedRoomId}
+					newMessageFromSocket={newMessageFromSocket}
+					newTrendingsFromSocket={newTrendingsFromSocket}
+					newStatsFromSocket={newStatsFromSocket}
+					notifyOnlineRooms={notifyOnlineRooms}
+					// socket={socket}
+					stompClient={stompClient}
+					userInfo={userInfo}
+					/>
+
+//Si no es superusuario, solo mostramos las rooms. Nada de trendings ni stats
+if(!props.userInfo.isSuperUser)
+{
+	leftPanel = <RoomPanel
+					showRoomPanel={showRoomPanel}
+					userInfo={userInfo}
+					onlineRooms={onlineRooms}
+					newMessageFromSocket={newMessageFromSocket}
+					newRoomFromSocket={newRoomFromSocket}
+					selectedRoomId={selectedRoomId}
+					setSelectedRoomId={setSelectedRoomId}
+				/>
+}
+
   return (
     <div className="content">
-      <RoomPanel
-        showRoomPanel={showRoomPanel}
-        userInfo={userInfo}
-        onlineRooms={onlineRooms}
-        newMessageFromSocket={newMessageFromSocket}
-		newRoomFromSocket={newRoomFromSocket}
-        selectedRoomId={selectedRoomId}
-        setSelectedRoomId={setSelectedRoomId}
-      />
-
-      <MessagesPanel
-        showMessagePanel={showMessagePanel}
-        selectedRoomId={selectedRoomId}
-        newMessageFromSocket={newMessageFromSocket}
-        notifyOnlineRooms={notifyOnlineRooms}
-        // socket={socket}
-        stompClient={stompClient}
-        userInfo={userInfo}
-      />
+		{leftPanel}
+		{rightPanel}
     </div>
   )
 }

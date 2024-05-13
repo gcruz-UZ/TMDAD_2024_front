@@ -22,7 +22,12 @@ const RoomPanel = (props) => {
   const allConstants = Constants()
 
   useEffect(() => {
-    loadrooms()
+	//Solo actualizamos si se trata del de trends o stats, porque si no, se iba constantemente
+	if(props.selectedRoomId == allConstants.trendingsId || props.selectedRoomId == allConstants.statsId)
+	{
+		setActiveRoomId(props.selectedRoomId)
+	}
+	loadrooms()
     onMessageArrival()
   })
 
@@ -101,7 +106,7 @@ const RoomPanel = (props) => {
 			output.push({
 				isAd: true,
 				roomName: "PUBLICIDAD",
-				roomId: -1,
+				roomId: allConstants.adId,
 				// lastMessage: ele.lastMessage ? ele.lastMessage.body : [],
 				lastMessage: "Last message",
 				// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
@@ -259,8 +264,20 @@ const RoomPanel = (props) => {
   const { userInfo, showRoomPanel, onlineRooms } = props
   const { showLoading, rooms } = roomPanelData
 
-  const roomStyle =
-    showRoomPanel == false ? "rooms-panel hide-div" : "rooms-panel"
+//   const roomStyle =
+//     showRoomPanel == false ? "rooms-panel hide-div" : "rooms-panel"
+
+  	let roomStyle
+  	if(userInfo.isSuperUser)
+	{
+		roomStyle =
+    		showRoomPanel == false ? "rooms-panel-superuser hide-div" : "rooms-panel-superuser"
+	}
+	else
+	{
+		roomStyle =
+    		showRoomPanel == false ? "rooms-panel hide-div" : "rooms-panel"
+	}
   return (
     <div className={roomStyle}>
       {showLoading == true ? (
