@@ -97,8 +97,27 @@ const RoomPanel = (props) => {
 		const output = []
 
 		if (props.userInfo.rooms.length > 0) {
+			//AÑADIMOS LA SALA DE PUBLI
+			output.push({
+				isAd: true,
+				roomName: "PUBLICIDAD",
+				roomId: -1,
+				// lastMessage: ele.lastMessage ? ele.lastMessage.body : [],
+				lastMessage: "Last message",
+				// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
+				dateInfo: "NA",
+				// userId: ele.lastMessage ? ele.lastMessage.userId : "NA",
+				userId: "NA",
+				// partnerId: rooms[index].partnerId || "NA",
+				partnerId: "NA",
+				// read: rooms[index].read,
+				read: false,
+			})
+
+
 			props.userInfo.rooms.forEach((ele, index) => {
 				output.push({
+					isAd: false,
 					roomName: ele.name,
 					roomId: ele.id,
 					// lastMessage: ele.lastMessage ? ele.lastMessage.body : [],

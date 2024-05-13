@@ -47,8 +47,9 @@ const WriteMessage = (props) => {
 			body: JSON.stringify({
 				'body': writeMessageData.message, 
 				'filename': filename,
+				'isAd': props.selectedRoomId == -1,
 				'userId': props.userInfo.id, 
-				'roomId': props.selectedRoomId})
+				'roomId': props.selectedRoomId == -1 ? null : props.selectedRoomId})
 		});
 
 		// // // // // // // // fetch(`http://localhost:8080/api/messages/download/document.pdf`, {
@@ -117,7 +118,7 @@ const WriteMessage = (props) => {
 		<textarea
 			rows="3"
 			className="msg-write-div"
-			disabled={props.isDisabled}
+			disabled={(props.selectedRoomId == -1 && !props.userInfo.isSuperUser) ? true : props.isDisabled}
 			onChange={handleChange}
 			onKeyPress={sendMessage}
 			value={writeMessageData.message}

@@ -46,36 +46,74 @@ const MessagesPanel = (props) => {
 
   // load the conversation of the selected friend
   const loadConversation = async (id) => {
-    setMessagePanelData((prevState) => {
-      return {
-        ...prevState,
-        showLoading: true,
-        disableTextArea: true,
-        selectedRoomId: id,
-      }
-    })
-    try {
-      const config = {
-		withCredentials: true,
-        method: allConstants.method.GET,
-        url: allConstants.getKotlinConversation.replace("{id}", id),
-        header: allConstants.header,
-      }
-
-	const res = await connectKotlinBackend(config)
-
-      // set the messages field of the state with the data
-      setMessagePanelData((prevState) => {
-        return {
-          ...prevState,
-          showLoading: false,
-          disableTextArea: false,
-          messages: res.data,
-        }
-      })
-    } catch (err) {
-      console.log("Error occurred...", err)
-    }
+	if(props.selectedRoomId == -1)
+	{
+		//Es la de PUBLI
+		setMessagePanelData((prevState) => {
+			return {
+			  ...prevState,
+			  showLoading: true,
+			  disableTextArea: true,
+			  selectedRoomId: id,
+			}
+		  })
+		  try {
+			const config = {
+			  withCredentials: true,
+			  method: allConstants.method.GET,
+			  url: allConstants.getKotlinAdConversation,
+			  header: allConstants.header,
+			}
+	  
+		  const res = await connectKotlinBackend(config)
+	  
+			// set the messages field of the state with the data
+			setMessagePanelData((prevState) => {
+			  return {
+				...prevState,
+				showLoading: false,
+				disableTextArea: false,
+				messages: res.data,
+			  }
+			})
+		  } catch (err) {
+			console.log("Error occurred...", err)
+		  }
+	}
+	else
+	{
+		//Es la normal
+		setMessagePanelData((prevState) => {
+			return {
+			  ...prevState,
+			  showLoading: true,
+			  disableTextArea: true,
+			  selectedRoomId: id,
+			}
+		  })
+		  try {
+			const config = {
+			  withCredentials: true,
+			  method: allConstants.method.GET,
+			  url: allConstants.getKotlinConversation.replace("{id}", id),
+			  header: allConstants.header,
+			}
+	  
+		  const res = await connectKotlinBackend(config)
+	  
+			// set the messages field of the state with the data
+			setMessagePanelData((prevState) => {
+			  return {
+				...prevState,
+				showLoading: false,
+				disableTextArea: false,
+				messages: res.data,
+			  }
+			})
+		  } catch (err) {
+			console.log("Error occurred...", err)
+		  }
+	}
   }
 
   const processNewMessage = () => {

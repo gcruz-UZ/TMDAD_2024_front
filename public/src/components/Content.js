@@ -43,6 +43,10 @@ const Content = (props) => {
 			fillRoomInfoFromSocket(JSON.parse(msg.body))
 		});
 
+		stompClient.subscribe('/topic/ad', (msg) => {
+			fillRoomInfoFromSocket(JSON.parse(msg.body))
+		});
+
 		stompClient.subscribe('/topic/trendings', (trending) => {
 			console.log(trending.body)
 		});
@@ -123,6 +127,11 @@ const Content = (props) => {
   }
 
   const fillRoomInfoFromSocket = (message) => {
+	if(message.isAd)
+	{
+		//Para que se actualice en la room ficticia de publi
+		message.roomId = -1
+	}
 	setContentData({ ...contentData, newMessageFromSocket: message })
   }
 
