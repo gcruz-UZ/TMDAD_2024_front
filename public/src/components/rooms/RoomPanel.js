@@ -193,8 +193,8 @@ const RoomPanel = (props) => {
 	}
   }
   // pass the selected room id augmented with logged in userid to the parent
-  const setSelectedRoomId = (id) => {
-    props.setSelectedRoomId(id)
+  const setSelectedRoomId = (id, name) => {
+    props.setSelectedRoomId(id, name)
     // set active room id for highlighting purpose
     setActiveRoomId(id)
 

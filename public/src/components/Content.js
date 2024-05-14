@@ -131,10 +131,10 @@ const Content = (props) => {
     }
   }
 
-  const setSelectedRoomId = (id) => {
+  const setSelectedRoomId = (id, name) => {
     toggleMessagePanel(true, false)
     // set in the corresponding variable
-    setContentData({ ...contentData, selectedRoomId: id })
+    setContentData({ ...contentData, selectedRoomId: id, selectedRoomName: name })
   }
 
   const fillRoomInfoFromSocket = (message) => {
@@ -168,6 +168,7 @@ const Content = (props) => {
     showMessagePanel,
     showRoomPanel,
     selectedRoomId,
+    selectedRoomName,
     newMessageFromSocket,
     onlineRooms,
 	newRoomFromSocket,
@@ -213,6 +214,7 @@ const Content = (props) => {
 let rightPanel = <MessagesPanel
 					showMessagePanel={showMessagePanel}
 					selectedRoomId={selectedRoomId}
+					selectedRoomName={selectedRoomName}
 					newMessageFromSocket={newMessageFromSocket}
 					newTrendingsFromSocket={newTrendingsFromSocket}
 					newStatsFromSocket={newStatsFromSocket}

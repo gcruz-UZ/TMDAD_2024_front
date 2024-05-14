@@ -447,10 +447,12 @@ input[type="text"]:focus {
 }
 
 /* message panel related */
+
 .message-panel {
-  background-color: var(--lighter-grey);
   display: grid;
-  grid-template-rows: auto 80px;
+  /* grid-template-rows: auto 80px; */
+  grid-template-rows: auto 1fr;
+  background-color: var(--lighter-grey);
   overflow-y: hidden;
   overflow-x: hidden;
 }
@@ -459,7 +461,82 @@ input[type="text"]:focus {
   position: relative;
   display: grid;
   overflow-y: auto;
-}
+} 
+
+/* Message Panel Layout ESTO ES SOLO UN EJEMPLO POR SI ACASO*/
+.message-panelllll {
+	display: grid;
+	grid-template-rows: auto 1fr; /* Header size auto, messages panel takes the rest */
+	height: 100%; /* Set to the height of the container */
+	overflow: hidden; /* Prevents the entire panel from scrolling */
+  }
+
+  /* Messages Section ESTO ES SOLO UN EJEMPLO POR SI ACASO*/
+.show-messagesss {
+	overflow-y: auto; /* Only this part scrolls */
+	overflow-x: hidden;
+	padding: 10px; /* Optional, for padding inside the scrollable area */
+  } 
+
+
+/* .messages-panel-header {
+	display: grid;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	background-color: var(--light-grey);
+	border-bottom: 1px solid var(--grey);
+	max-height: 100px;
+  }
+  
+  .messages-panel-header h2 {
+	margin: 0;
+  }
+  
+  .messages-panel-header button {
+	padding: 5px 10px;
+	background-color: var(--primary-color);
+	color: white;
+	border: none;
+	cursor: pointer;
+  }
+  
+  .messages-panel-header button:hover {
+	background-color: var(--primary-color-dark);
+  } */
+
+/* Header Section */
+.messages-panel-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	background-color: #f0f0f0;
+	border-bottom: 1px solid #d3d3d3;
+  }
+  
+  .messages-panel-header h2 {
+	margin: 0;
+	color: #333; /* Dark grey color for the text */
+	font-size: 20px; /* Slightly larger font size for visibility */
+  }
+  
+  .messages-panel-header button {
+	padding: 5px 15px;
+	font-size: 16px;
+	color: white;
+	background-color: #007BFF; /* Bootstrap primary blue */
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+  }
+  
+  .messages-panel-header button:hover {
+	background-color: #0056b3; /* Darker shade of blue for hover effect */
+  }
+
+
+
 
 .msg {
   font-size: 0.7em;

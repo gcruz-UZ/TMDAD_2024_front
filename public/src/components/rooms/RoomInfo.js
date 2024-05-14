@@ -20,7 +20,7 @@ const RoomInfo = ({
   return (
     <div
       className={activeRoomId == roomId ? "room-info active-room" : "room-info"}
-      onClick={() => setSelectedRoomId(roomId)}
+      onClick={() => setSelectedRoomId(roomId, roomName)}
     >
       <div className="room-icon-div">
         <div className="room-initials">

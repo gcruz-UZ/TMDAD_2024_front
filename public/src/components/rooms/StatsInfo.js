@@ -10,7 +10,7 @@ const StatsInfo = (props) => {
 	const [activeRoomId, setActiveRoomId] = useState(props.selectedRoomId)
 	  // pass the selected room id augmented with logged in userid to the parent
 	  const setSelectedRoomId = (id) => {
-		props.setSelectedRoomId(id)
+		props.setSelectedRoomId(id, "")
 		// set active room id for highlighting purpose
 		setActiveRoomId(id)
 	  }

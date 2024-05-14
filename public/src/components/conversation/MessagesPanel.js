@@ -180,6 +180,11 @@ const MessagesPanel = (props) => {
     }
   }
 
+  const addUserToRoom = () => {
+    // Implement the functionality to add a user to the room
+    alert("Add user to the room functionality goes here");
+  }
+
   const { showLoading, disableTextArea, selectedRoomId } = messagePanelData
   const { userInfo, showMessagePanel } = props
   const messageStyle =
@@ -193,19 +198,40 @@ let messagesPanelBody = <div className="show-messages">
 	{showLoading == true ? (
 	<Loading />
 	) : (
-	messagePanelData.messages.map((message) => {
-		return <Message key={message.id} {...message} userInfo={userInfo} />
-	})
+			messagePanelData.messages.map((message) => {
+				return <Message key={message.id} {...message} userInfo={userInfo} />
+			})
 	)}
 	<div style={{ float: "left", clear: "both" }} ref={messageEnd}></div>
 	</div>
 
-let messagesPanelWrite = <WriteMessage
-	isDisabled={disableTextArea}
-	userInfo={userInfo}
-	selectedRoomId={selectedRoomId}
-	stompClient={props.stompClient}
-/>
+let messagesPanelWrite = ""
+if(selectedRoomId > 0 || selectedRoomId == allConstants.adId)
+{
+	messagesPanelWrite = <WriteMessage
+			isDisabled={disableTextArea}
+			userInfo={userInfo}
+			selectedRoomId={selectedRoomId}
+			stompClient={props.stompClient}/>
+}
+else
+{
+	messagesPanelWrite = ""
+}
+
+let messagesPanelHeader = ""
+if(selectedRoomId > 0)
+{
+	messagesPanelHeader = <div className={messageHeaderStyle}>
+							{/* <h2>{"ROOOOM NAME"}</h2> */}
+							<h2>{props.selectedRoomName}</h2>
+							<button onClick={addUserToRoom}>Add User</button>
+						</div>
+}
+else
+{
+	messagesPanelHeader = ""
+}
 
 //En funcion de si hemos escogido trends o stats no mostramos mensajes ni cuadro de escritura
 if(selectedRoomId == allConstants.trendingsId)
@@ -221,6 +247,7 @@ else if(selectedRoomId == allConstants.statsId)
 
   return (
     <div className={messageStyle}>
+	  {messagesPanelHeader}
       {messagesPanelBody}
       {messagesPanelWrite}
     </div>
