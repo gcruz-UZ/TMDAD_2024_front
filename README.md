@@ -74,3 +74,19 @@ npm install @stomp/stompjs sockjs-client
 
 Y luego vuelve a compilar como se explica en la sección *Compilar*
 
+## Para que funcionen los modales
+
+Navega dentro del directorio:
+
+```
+cd TMDAD_2024_front
+```
+
+Instala:
+
+```
+npm install react-modal
+```
+
+Y luego vuelve a compilar como se explica en la sección *Compilar*
+

@@ -55,9 +55,108 @@ body {
   background-color: var(--light-purple);
   color: var(--lighter-grey);
 
-  grid-template-columns: 5fr 1fr;
+  grid-template-columns: 5fr 1fr 1fr;
+  align-items: center;
   padding: 1em;
 }
+
+/* title of the application related */
+.title {
+	font-weight: var(--font-weight-regular);
+	text-transform: uppercase;
+}
+
+/* user logo related */
+.user-info {
+	/*grid-column: 6;*/
+	position: relative;
+	justify-self: end;
+}
+
+.user-greeting {
+	display: block;
+ }
+ 
+ .ReactModal__Overlay {
+   background-color: rgba(0, 0, 0, 0.75) !important;
+ }
+ 
+ .ReactModal__Content {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   right: auto;
+   bottom: auto;
+   margin-right: -50%;
+   transform: translate(-50%, -50%);
+   background: #fff;
+   padding: 20px;
+   border-radius: 4px;
+   outline: none;
+ }
+ 
+ .modal {
+   width: 500px;
+   max-width: 90%;
+   background: white;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+ }
+ 
+ .overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background-color: rgba(0, 0, 0, 0.75);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+ 
+ .modal h2 {
+   margin-top: 0;
+   margin-bottom: 20px;
+ }
+ 
+ .modal form {
+   display: flex;
+   flex-direction: column;
+ }
+ 
+ .modal form > div {
+   margin-bottom: 15px;
+ }
+ 
+ .modal label {
+   display: block;
+   margin-bottom: 5px;
+ }
+ 
+ .modal input[type="text"] {
+   width: 100%;
+   padding: 8px;
+   box-sizing: border-box;
+ }
+ 
+ .modal select {
+   width: 100%;
+   padding: 8px;
+   box-sizing: border-box;
+ }
+ 
+ .modal button {
+   padding: 10px;
+   margin-top: 10px;
+ }
+
+  .create-room-container {
+	justify-self: center; /* Center the CreateChatRoom component */
+	margin-left: 20px; /* Add some spacing */
+  }
+
 
 /* Footer realted */
 .footer {
@@ -73,11 +172,7 @@ body {
 }
   
 
-/* title of the application related */
-.title {
-  font-weight: var(--font-weight-regular);
-  text-transform: uppercase;
-}
+
 
 .bold-title {
   font-weight: var(--font-weight-bold);
@@ -141,13 +236,6 @@ input[type="text"]:focus {
 	border-left: solid 2px;
 	border-radius: 2px;
   }
-
-/* user logo related */
-.user-info {
-  /*grid-column: 6;*/
-  position: relative;
-  justify-self: end;
-}
 
 .user-icon {
   border-radius: 50px;
