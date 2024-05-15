@@ -14,6 +14,9 @@ const Constants = () => {
 	getKotlinConversation: `${kotlinUrl}/rooms/{id}/messages`,
 	getKotlinAdConversation: `${kotlinUrl}/messages/ad`,
 	getKotlinUsers: `${kotlinUrl}/users`,
+	getKotlinUsersByRoom: `${kotlinUrl}/rooms/{id}/users`,
+	getKotlinCandidateUsers: `${kotlinUrl}/rooms/{id}/candidate-users`,
+	deleteKotlinRoom: `${kotlinUrl}/rooms/{id}`,
 	createKotlinRoom: `${kotlinUrl}/rooms`,
     getRooms: `${url}/getrooms/{id}`,
     saveReadStatus: `${url}/updateroomreadstatus`,
@@ -28,6 +31,7 @@ const Constants = () => {
       POST: "POST",
       GET: "GET",
       PUT: "PUT",
+      DELETE: "DELETE",
     },
 
 	adId: -1,

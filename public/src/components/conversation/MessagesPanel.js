@@ -7,6 +7,7 @@ import Loading from "../Loading"
 import { connectBackend } from "../connectBackend"
 import { connectKotlinBackend } from "../connectKotlinBackend"
 import UserSelectionModal from '../layout/UserSelectionModal';
+import DeleteUserModal from '../layout/DeleteUserModal';
 
 // Constants
 import Constants from "../Constants"
@@ -19,6 +20,15 @@ const MessagesPanel = (props) => {
 		console.log('Selected Users:', selectedUsers);
 		// API call to add users to the room can be done here
 		closeModal();
+	};
+
+	const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+	const openDeleteModal = () => setDeleteModalOpen(true);
+	const closeDeleteModal = () => setDeleteModalOpen(false);
+	const submitDeletedUsers = (deletedUsers) => {
+		console.log('Deleted Users:', deletedUsers);
+		// API call to add users to the room can be done here
+		closeDeleteModal();
 	};
 
   // Initialize the initial state and its modifier function
@@ -294,6 +304,25 @@ const MessagesPanel = (props) => {
     alert("Add user to the room functionality goes here");
   }
 
+  const deleteRoom = async () => {
+	const result = confirm("Are you sure you want to delete the room?");
+	if (result === true) {
+		try {
+			const config = {
+				withCredentials: true,
+				method: allConstants.method.DELETE,
+				url: allConstants.deleteKotlinRoom.replace("{id}", selectedRoomId),
+				header: allConstants.header,
+			  }
+	
+			const response = await connectKotlinBackend(config)
+			// setUsers(response.data); // Assuming the response data is an array of user objects
+		  } catch (error) {
+			console.error('Error deleting room:', error);
+		  }
+	}
+  }
+
   const { showLoading, disableTextArea, selectedRoomId, showMessagePanel2 } = messagePanelData
   const { userInfo, showMessagePanel } = props
   const messageStyle =
@@ -346,12 +375,19 @@ if(selectedRoomId > 0)
 							<h2>{props.selectedRoomName}</h2>
 							{/* <button onClick={addUserToRoom}>Add User</button> */}
 							{moderator && <button onClick={openModal}>Add User</button>}
-							{moderator && <button onClick={openModal} className="delete-user">Delete User</button>}
-							{moderator && <button onClick={openModal} className="delete-room">Delete Room</button>}
+							{moderator && <button onClick={openDeleteModal} className="delete-user">Delete User</button>}
+							{moderator && <button onClick={deleteRoom} className="delete-room">Delete Room</button>}
 							<UserSelectionModal
 								isOpen={isModalOpen}
 								onRequestClose={closeModal}
 								onSubmit={submitSelectedUsers}
+								selectedRoomId = {selectedRoomId}
+							/>
+							<DeleteUserModal
+								isOpen={isDeleteModalOpen}
+								onRequestClose={closeDeleteModal}
+								onSubmit={submitDeletedUsers}
+								selectedRoomId = {selectedRoomId}
 							/>
 						</div>
 }

@@ -1,4 +1,4 @@
-// UserSelectionModal.js
+// DeleteUserModal.js
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import Loading from "../Loading"
@@ -9,7 +9,7 @@ import Constants from "../Constants"
 
 Modal.setAppElement('#app'); // Correctly set app element to prevent accessibility issues
 
-const UserSelectionModal = ({ isOpen, onRequestClose, onSubmit, selectedRoomId }) => {
+const DeleteUserModal = ({ isOpen, onRequestClose, onSubmit, selectedRoomId }) => {
   const [users, setUsers] = useState([]);
 //   const [selectedUsers, setSelectedUsers] = useState([]);
 const [selectedUsers, setSelectedUsers] = useState([]);
@@ -22,12 +22,12 @@ const [selectedUsers, setSelectedUsers] = useState([]);
 		if(!isOpen)
 			return
 
-		console.log("fetching: ", selectedRoomId)
+		console.log("fetching en delete: ", selectedRoomId)
 		try {
 		  const config = {
 			  withCredentials: true,
 			  method: allConstants.method.GET,
-			  url: allConstants.getKotlinCandidateUsers.replace("{id}", selectedRoomId),
+			  url: allConstants.getKotlinUsersByRoom.replace("{id}", selectedRoomId),
 			  header: allConstants.header,
 			}
   
@@ -77,7 +77,7 @@ const [selectedUsers, setSelectedUsers] = useState([]);
       className="modal"
       overlayClassName="overlay"
     >
-      <h2>Add Users</h2>
+      <h2>Delete Users</h2>
 	  {users.length === 0 ? (
 			<Loading />
 		) : (
@@ -97,14 +97,14 @@ const [selectedUsers, setSelectedUsers] = useState([]);
 					))}
 					<button type="submit">Submit</button> */}
 					<div>
-						<label>Select Users To Add:</label>
+						<label>Select Users To Delete:</label>
 						<select multiple value={selectedUsers} onChange={handleUserSelectChange}>
 						{users/*.filter(user => user.login !== userlogin)*/.map(user => (
 							<option key={user.id} value={user.login}>{user.login}</option>
 						))}
 						</select>
 					</div>
-					<button type="submit">Add Users</button>
+					<button type="submit">Delete Users</button>
 					<button onClick={requestClose}>Close</button>
 				</form>
 			</>
@@ -113,4 +113,4 @@ const [selectedUsers, setSelectedUsers] = useState([]);
   );
 };
 
-export default UserSelectionModal;
+export default DeleteUserModal;
