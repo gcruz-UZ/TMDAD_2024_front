@@ -152,10 +152,12 @@ const Content = (props) => {
   }
 
   const fillNewRoomFromSocket = (room) => {
+	props.userInfo.rooms.push(room)
     setContentData({ ...contentData, newRoomFromSocket: room })
   }
 
   const fillRemovedRoomFromSocket = (room) => {
+	props.userInfo.rooms = props.userInfo.rooms.filter(r => r.id != room.id)
     setContentData({ ...contentData, removedRoomFromSocket: room })
   }
 

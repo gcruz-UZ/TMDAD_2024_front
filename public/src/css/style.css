@@ -513,16 +513,25 @@ input[type="text"]:focus {
 	padding: 10px;
 	background-color: #f0f0f0;
 	border-bottom: 1px solid #d3d3d3;
+	width: 100%; /* Ensure the header takes full width */
   }
   
   .messages-panel-header h2 {
 	margin: 0;
+	flex-shrink: 0; /* Prevent the title from shrinking */
 	color: #333; /* Dark grey color for the text */
 	font-size: 20px; /* Slightly larger font size for visibility */
   }
+
+  .messages-panel-header .button-group {
+    display: flex; /* Aligns all buttons in a row */
+	margin-left: auto; /* Pushes the button group to the right */
+	background-color: lightcoral; /* Temporary background color to see the extent of the .button-group */
+}
   
   .messages-panel-header button {
 	padding: 5px 15px;
+	margin-left: 10px; /* Adds space between buttons */
 	font-size: 16px;
 	color: white;
 	background-color: #007BFF; /* Bootstrap primary blue */
@@ -534,7 +543,22 @@ input[type="text"]:focus {
   .messages-panel-header button:hover {
 	background-color: #0056b3; /* Darker shade of blue for hover effect */
   }
+  
+  .messages-panel-header .delete-user {
+    background-color: red; /* Red color for the Delete User button */
+}
 
+.messages-panel-header .delete-user:hover {
+    background-color: darkred; /* Darker shade of red for hover effect */
+}
+
+.messages-panel-header .delete-room {
+    background-color: red; /* Red color for the Delete User button */
+}
+
+.messages-panel-header .delete-room:hover {
+    background-color: darkred; /* Darker shade of red for hover effect */
+}
 
 
 

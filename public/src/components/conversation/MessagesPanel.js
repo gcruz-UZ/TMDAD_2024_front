@@ -328,6 +328,16 @@ else
 	messagesPanelWrite = ""
 }
 
+// console.log("User info: ", userInfo)
+// console.log("selected room id: ", selectedRoomId)
+let moderator = false
+let room = userInfo.rooms.find(r => r.id === selectedRoomId)
+if(room)
+{
+	moderator = room.moderatorId === userInfo.id
+}
+// console.log("MODERATOR: ", moderator)
+
 let messagesPanelHeader = ""
 if(selectedRoomId > 0)
 {
@@ -335,7 +345,9 @@ if(selectedRoomId > 0)
 							{/* <h2>{"ROOOOM NAME"}</h2> */}
 							<h2>{props.selectedRoomName}</h2>
 							{/* <button onClick={addUserToRoom}>Add User</button> */}
-							<button onClick={openModal}>Add User</button>
+							{moderator && <button onClick={openModal}>Add User</button>}
+							{moderator && <button onClick={openModal} className="delete-user">Delete User</button>}
+							{moderator && <button onClick={openModal} className="delete-room">Delete Room</button>}
 							<UserSelectionModal
 								isOpen={isModalOpen}
 								onRequestClose={closeModal}
