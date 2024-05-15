@@ -63,8 +63,12 @@ const Content = (props) => {
 		});
 
 		stompClient.subscribe('/topic/rooms/' + props.userInfo.login, (room) => {
-			console.log(JSON.parse(room.body))
 			fillNewRoomFromSocket(JSON.parse(room.body))
+		});
+
+		stompClient.subscribe('/topic/removedFromRoom/' + props.userInfo.login, (room) => {
+			alert("HAS SIDO ELIMINADO DE LA ROOM '" + JSON.parse(room.body).name + "'");
+			fillRemovedRoomFromSocket(JSON.parse(room.body))
 		});
 	};
 
@@ -151,6 +155,10 @@ const Content = (props) => {
     setContentData({ ...contentData, newRoomFromSocket: room })
   }
 
+  const fillRemovedRoomFromSocket = (room) => {
+    setContentData({ ...contentData, removedRoomFromSocket: room })
+  }
+
   const fillNewTrendingsFromSocket = (trendings) => {
     setContentData({ ...contentData, newTrendingsFromSocket: trendings })
   }
@@ -172,6 +180,7 @@ const Content = (props) => {
     newMessageFromSocket,
     onlineRooms,
 	newRoomFromSocket,
+	removedRoomFromSocket,
 	newTrendingsFromSocket,
 	newStatsFromSocket,
   } = contentData
@@ -188,6 +197,7 @@ const Content = (props) => {
 							onlineRooms={onlineRooms}
 							newMessageFromSocket={newMessageFromSocket}
 							newRoomFromSocket={newRoomFromSocket}
+							removedRoomFromSocket={removedRoomFromSocket}
 							selectedRoomId={selectedRoomId}
 							setSelectedRoomId={setSelectedRoomId}
 						/>
@@ -216,6 +226,7 @@ let rightPanel = <MessagesPanel
 					selectedRoomId={selectedRoomId}
 					selectedRoomName={selectedRoomName}
 					newMessageFromSocket={newMessageFromSocket}
+					removedRoomFromSocket={removedRoomFromSocket}
 					newTrendingsFromSocket={newTrendingsFromSocket}
 					newStatsFromSocket={newStatsFromSocket}
 					notifyOnlineRooms={notifyOnlineRooms}
@@ -233,6 +244,7 @@ if(!props.userInfo.isSuperUser)
 					onlineRooms={onlineRooms}
 					newMessageFromSocket={newMessageFromSocket}
 					newRoomFromSocket={newRoomFromSocket}
+					removedRoomFromSocket={removedRoomFromSocket}
 					selectedRoomId={selectedRoomId}
 					setSelectedRoomId={setSelectedRoomId}
 				/>

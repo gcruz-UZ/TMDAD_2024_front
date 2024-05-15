@@ -16,6 +16,7 @@ const RoomPanel = (props) => {
   })
   const [lastMsgFromSocketId, setLastMsgFromSocketId] = useState("")
   const [lastRoomFromSocketId, setLastRoomFromSocketId] = useState("")
+  const [lastRemovedRoomFromSocketId, setLastRemovedRoomFromSocketId] = useState("")
   const [shouldLoadrooms, setShouldLoadRooms] = useState(true)
   const [activeRoomId, setActiveRoomId] = useState(props.selectedRoomId)
   // instantiate the Constants
@@ -99,27 +100,24 @@ const RoomPanel = (props) => {
         // // // // //   return new Date(b.dateInfo) - new Date(a.dateInfo)
         // // // // // })
 
-		const output = []
+		//Añadimos la de publi
+		const output = [{
+			isAd: true,
+			roomName: "PUBLICIDAD",
+			roomId: allConstants.adId,
+			// lastMessage: ele.lastMessage ? ele.lastMessage.body : [],
+			lastMessage: "Last message",
+			// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
+			dateInfo: "NA",
+			// userId: ele.lastMessage ? ele.lastMessage.userId : "NA",
+			userId: "NA",
+			// partnerId: rooms[index].partnerId || "NA",
+			partnerId: "NA",
+			// read: rooms[index].read,
+			read: false,
+		}]
 
 		if (props.userInfo.rooms.length > 0) {
-			//AÑADIMOS LA SALA DE PUBLI
-			output.push({
-				isAd: true,
-				roomName: "PUBLICIDAD",
-				roomId: allConstants.adId,
-				// lastMessage: ele.lastMessage ? ele.lastMessage.body : [],
-				lastMessage: "Last message",
-				// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
-				dateInfo: "NA",
-				// userId: ele.lastMessage ? ele.lastMessage.userId : "NA",
-				userId: "NA",
-				// partnerId: rooms[index].partnerId || "NA",
-				partnerId: "NA",
-				// read: rooms[index].read,
-				read: false,
-			})
-
-
 			props.userInfo.rooms.forEach((ele, index) => {
 				output.push({
 					isAd: false,
@@ -190,6 +188,12 @@ const RoomPanel = (props) => {
 			// read: rooms[index].read,
 			read: false,
 		})
+	}
+
+	if(props.removedRoomFromSocket && props.removedRoomFromSocket.id !== lastRemovedRoomFromSocketId)
+	{
+		setLastRemovedRoomFromSocketId(props.removedRoomFromSocket.id)
+		roomPanelData.rooms = roomPanelData.rooms.filter(room => room.roomId != props.removedRoomFromSocket.id)
 	}
   }
   // pass the selected room id augmented with logged in userid to the parent

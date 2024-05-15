@@ -27,9 +27,11 @@ const MessagesPanel = (props) => {
     showLoading: false,
     disableTextArea: true,
     selectedRoomId: "",
+	showMessagePanel2: true,
   })
 
   const [lastMsgSocketId, setLastMsgSocketId] = useState("")
+  const [lastRemovedRoomFromSocketId, setLastRemovedRoomFromSocketId] = useState("")
 
   // instantiate the Constants
   const allConstants = Constants()
@@ -53,11 +55,47 @@ const MessagesPanel = (props) => {
 		scrollToBottom()
 	}
     processNewMessage()
+    processRemovedRoom()
   })
 
   const scrollToBottom = () => {
     messageEnd.current.scrollIntoView({ block: "end", behavior: "smooth" })
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // load the conversation of the selected friend
   const loadConversation = async (id) => {
@@ -70,6 +108,7 @@ const MessagesPanel = (props) => {
 			showLoading: true,
 			disableTextArea: true,
 			selectedRoomId: id,
+			showMessagePanel2: true,
 			}
 		})
 		try {
@@ -90,6 +129,7 @@ const MessagesPanel = (props) => {
 				disableTextArea: false,
 				// messages: res.data,
 				messages: [],
+				showMessagePanel2: true,
 			}
 			})
 		} catch (err) {
@@ -105,6 +145,7 @@ const MessagesPanel = (props) => {
 			  showLoading: true,
 			  disableTextArea: true,
 			  selectedRoomId: id,
+			  showMessagePanel2: true,
 			}
 		  })
 		  try {
@@ -124,6 +165,7 @@ const MessagesPanel = (props) => {
 				showLoading: false,
 				disableTextArea: false,
 				messages: res.data,
+				showMessagePanel2: true,
 			  }
 			})
 		  } catch (err) {
@@ -139,6 +181,7 @@ const MessagesPanel = (props) => {
 			  showLoading: true,
 			  disableTextArea: true,
 			  selectedRoomId: id,
+			  showMessagePanel2: true,
 			}
 		  })
 		  try {
@@ -158,6 +201,7 @@ const MessagesPanel = (props) => {
 				showLoading: false,
 				disableTextArea: false,
 				messages: res.data,
+				showMessagePanel2: true,
 			  }
 			})
 		  } catch (err) {
@@ -165,6 +209,43 @@ const MessagesPanel = (props) => {
 		  }
 	}
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   const processNewMessage = () => {
     if (
@@ -190,15 +271,33 @@ const MessagesPanel = (props) => {
     }
   }
 
+  const processRemovedRoom = () => {
+    if (
+      props.removedRoomFromSocket &&
+      props.removedRoomFromSocket.id !== lastRemovedRoomFromSocketId
+    ) {
+      // if the removed room is from the selected room
+      if (props.removedRoomFromSocket.id == messagePanelData.selectedRoomId) {
+        setMessagePanelData((prevState) => {
+			return {
+			  ...prevState,
+			  showMessagePanel2: false,
+			}
+		  })
+        setLastRemovedRoomFromSocketId(props.removedRoomFromSocket.id)
+      }
+    }
+  }
+
   const addUserToRoom = () => {
     // Implement the functionality to add a user to the room
     alert("Add user to the room functionality goes here");
   }
 
-  const { showLoading, disableTextArea, selectedRoomId } = messagePanelData
+  const { showLoading, disableTextArea, selectedRoomId, showMessagePanel2 } = messagePanelData
   const { userInfo, showMessagePanel } = props
   const messageStyle =
-    showMessagePanel == true ? "message-panel" : "message-panel hide-div"
+    (showMessagePanel == true && showMessagePanel2 == true) ? "message-panel" : "message-panel hide-div"
 
 // console.log("Selected ROOM ID from MESSAGES PANEL: ", selectedRoomId)
 
