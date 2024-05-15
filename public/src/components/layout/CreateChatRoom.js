@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+import Loading from "../Loading"
 import axios from 'axios';
 import { connectKotlinBackend } from "../connectKotlinBackend"
 
@@ -20,34 +21,36 @@ const CreateChatRoom = (props) => {
 
   // instantiate the Constants
   const allConstants = Constants()
+  const fetchUsers = async () => {
+	try {
+	  const config = {
+		  withCredentials: true,
+		  method: allConstants.method.GET,
+		  url: allConstants.getKotlinUsers,
+		  header: allConstants.header,
+		}
+
+	  const response = await connectKotlinBackend(config)
+	  setUsers(response.data); // Assuming the response data is an array of user objects
+	} catch (error) {
+	  console.error('Error fetching users:', error);
+	}
+  };
 
   // Fetch users from backend when component mounts
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-		const config = {
-			withCredentials: true,
-			method: allConstants.method.GET,
-			url: allConstants.getKotlinUsers,
-			header: allConstants.header,
-		  }
-
-        const response = await connectKotlinBackend(config)
-        setUsers(response.data); // Assuming the response data is an array of user objects
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-
-    fetchUsers();
+	// console.log("ABIERTO 1")
+    // fetchUsers();
   }, []);
 
   const openModal = () => {
+	fetchUsers();
     setModalIsOpen(true);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
+	setUsers([]);
     setResultMessage('');
   };
 
@@ -85,23 +88,29 @@ const CreateChatRoom = (props) => {
       <span onClick={openModal} style={{ cursor: 'pointer', color: 'blue', marginLeft: '20px' }}>Create New Chat Room</span>
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal" overlayClassName="overlay">
         <h2>Create New Chat Room</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Room Name:</label>
-            <input type="text" value={name} onChange={handleRoomNameChange} required />
-          </div>
-          <div>
-            <label>Select Users:</label>
-            <select multiple value={selectedUsers} onChange={handleUserSelectChange}>
-              {users.filter(user => user.login !== userlogin).map(user => (
-                <option key={user.id} value={user.login}>{user.login}</option>
-              ))}
-            </select>
-          </div>
-          <button type="submit">Create Room</button>
-        </form>
-        {resultMessage && <p><strong>{resultMessage}</strong></p>}
-        <button onClick={closeModal}>Close</button>
+		{users.length === 0 ? (
+			<Loading />
+		) : (
+			<>
+				<form onSubmit={handleSubmit}>
+				<div>
+					<label>Room Name:</label>
+					<input type="text" value={name} onChange={handleRoomNameChange} required />
+				</div>
+				<div>
+					<label>Select Users:</label>
+					<select multiple value={selectedUsers} onChange={handleUserSelectChange}>
+					{users.filter(user => user.login !== userlogin).map(user => (
+						<option key={user.id} value={user.login}>{user.login}</option>
+					))}
+					</select>
+				</div>
+				<button type="submit">Create Room</button>
+				</form>
+				{resultMessage && <p><strong>{resultMessage}</strong></p>}
+				<button onClick={closeModal}>Close</button>
+			</>
+		)}
       </Modal>
     </div>
   );
