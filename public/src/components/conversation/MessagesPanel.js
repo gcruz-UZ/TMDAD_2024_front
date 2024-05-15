@@ -6,11 +6,21 @@ import WriteMessage from "./WriteMessage"
 import Loading from "../Loading"
 import { connectBackend } from "../connectBackend"
 import { connectKotlinBackend } from "../connectKotlinBackend"
+import UserSelectionModal from '../layout/UserSelectionModal';
 
 // Constants
 import Constants from "../Constants"
 
 const MessagesPanel = (props) => {
+	const [isModalOpen, setModalOpen] = useState(false);
+	const openModal = () => setModalOpen(true);
+	const closeModal = () => setModalOpen(false);
+	const submitSelectedUsers = (selectedUsers) => {
+		console.log('Selected Users:', selectedUsers);
+		// API call to add users to the room can be done here
+		closeModal();
+	};
+
   // Initialize the initial state and its modifier function
   const [messagePanelData, setMessagePanelData] = useState({
     messages: [],
@@ -222,10 +232,16 @@ else
 let messagesPanelHeader = ""
 if(selectedRoomId > 0)
 {
-	messagesPanelHeader = <div className={messageHeaderStyle}>
+	messagesPanelHeader = <div className="messages-panel-header">
 							{/* <h2>{"ROOOOM NAME"}</h2> */}
 							<h2>{props.selectedRoomName}</h2>
-							<button onClick={addUserToRoom}>Add User</button>
+							{/* <button onClick={addUserToRoom}>Add User</button> */}
+							<button onClick={openModal}>Add User</button>
+							<UserSelectionModal
+								isOpen={isModalOpen}
+								onRequestClose={closeModal}
+								onSubmit={submitSelectedUsers}
+							/>
 						</div>
 }
 else
