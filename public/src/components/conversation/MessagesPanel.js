@@ -18,6 +18,33 @@ const MessagesPanel = (props) => {
 	const closeModal = () => setModalOpen(false);
 	const submitSelectedUsers = (selectedUsers) => {
 		console.log('Selected Users:', selectedUsers);
+
+		selectedUsers.map((login) => {
+			try {
+				const config = {
+				  withCredentials: true,
+				  method: allConstants.method.PUT,
+				  url: allConstants.deleteKotlinUserInRoom.replace("{id}", selectedRoomId).replace("{login}", login),
+				  header: allConstants.header,
+				}
+		  
+			  const res = connectKotlinBackend(config)
+		  
+				// // set the messages field of the state with the data
+				// setMessagePanelData((prevState) => {
+				//   return {
+				// 	...prevState,
+				// 	showLoading: false,
+				// 	disableTextArea: false,
+				// 	messages: res.data,
+				// 	showMessagePanel2: true,
+				//   }
+				// })
+			  } catch (err) {
+				console.log("Error occurred...", err)
+			  }
+		})
+
 		// API call to add users to the room can be done here
 		closeModal();
 	};
@@ -27,6 +54,33 @@ const MessagesPanel = (props) => {
 	const closeDeleteModal = () => setDeleteModalOpen(false);
 	const submitDeletedUsers = (deletedUsers) => {
 		console.log('Deleted Users:', deletedUsers);
+
+		deletedUsers.map((login) => {
+			try {
+				const config = {
+				  withCredentials: true,
+				  method: allConstants.method.DELETE,
+				  url: allConstants.deleteKotlinUserInRoom.replace("{id}", selectedRoomId).replace("{login}", login),
+				  header: allConstants.header,
+				}
+		  
+			  const res = connectKotlinBackend(config)
+		  
+				// // set the messages field of the state with the data
+				// setMessagePanelData((prevState) => {
+				//   return {
+				// 	...prevState,
+				// 	showLoading: false,
+				// 	disableTextArea: false,
+				// 	messages: res.data,
+				// 	showMessagePanel2: true,
+				//   }
+				// })
+			  } catch (err) {
+				console.log("Error occurred...", err)
+			  }
+		})
+
 		// API call to add users to the room can be done here
 		closeDeleteModal();
 	};

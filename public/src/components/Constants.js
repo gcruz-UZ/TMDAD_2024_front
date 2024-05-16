@@ -1,8 +1,10 @@
 // list of all the constants
 const Constants = () => {
   const url = "http://localhost:3000/services"
-  const kotlinUrl = "http://localhost:8080/api"
-  const kotlinAuthUrl = "http://localhost:8080/api/auth"
+  // const kotlinUrl = "http://localhost:8080/api"
+  // const kotlinAuthUrl = "http://localhost:8080/api/auth"
+  const kotlinUrl = "https://tmdad2024front-6457f4860338.herokuapp.com/api"
+  const kotlinAuthUrl = "https://tmdad2024front-6457f4860338.herokuapp.com/api/auth"
   return {
     // all the URLs
     url,
@@ -17,6 +19,7 @@ const Constants = () => {
 	getKotlinUsersByRoom: `${kotlinUrl}/rooms/{id}/users`,
 	getKotlinCandidateUsers: `${kotlinUrl}/rooms/{id}/candidate-users`,
 	deleteKotlinRoom: `${kotlinUrl}/rooms/{id}`,
+	deleteKotlinUserInRoom: `${kotlinUrl}/rooms/{id}/user/{login}`,
 	createKotlinRoom: `${kotlinUrl}/rooms`,
     getRooms: `${url}/getrooms/{id}`,
     saveReadStatus: `${url}/updateroomreadstatus`,
