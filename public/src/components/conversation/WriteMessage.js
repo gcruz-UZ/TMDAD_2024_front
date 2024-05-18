@@ -93,6 +93,11 @@ const WriteMessage = (props) => {
 		return
 	}
 
+	if(e.target.value == "\n")
+	{
+		return
+	}
+
 	setWriteMessageData({ ...writeMessageData, message: e.target.value })
   }
 
