@@ -1,10 +1,10 @@
 // list of all the constants
 const Constants = () => {
   const url = "http://localhost:3000/services"
-  // const kotlinUrl = "http://localhost:8080/api"
-  // const kotlinAuthUrl = "http://localhost:8080/api/auth"
-  const kotlinUrl = "https://tmdad2024-cbf9ecbfe423.herokuapp.com/api"
-  const kotlinAuthUrl = "https://tmdad2024-cbf9ecbfe423.herokuapp.com/api/auth"
+  const kotlinUrl = "http://localhost:8080/api"
+  const kotlinAuthUrl = "http://localhost:8080/api/auth"
+//   const kotlinUrl = "https://tmdad2024-cbf9ecbfe423.herokuapp.com/api"
+//   const kotlinAuthUrl = "https://tmdad2024-cbf9ecbfe423.herokuapp.com/api/auth"
   return {
     // all the URLs
     url,

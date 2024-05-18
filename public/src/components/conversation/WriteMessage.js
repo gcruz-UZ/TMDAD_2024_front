@@ -86,7 +86,13 @@ const WriteMessage = (props) => {
   }
 
   const handleChange = (e) => {
-    setWriteMessageData({ ...writeMessageData, message: e.target.value })
+	if(e.target.value.length > 500)
+	{
+		alert("No se permiten mensajes superiores a 500 caracteres de longitud");
+		return
+	}
+
+	setWriteMessageData({ ...writeMessageData, message: e.target.value })
   }
 
   

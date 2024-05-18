@@ -46,20 +46,25 @@ const Content = (props) => {
 		setConnected(true);
 		console.log('Connected: ' + frame);
 		console.log("onlineUser", props.userInfo.id)
+
+		//Si soy superuser me suscribo a trendings y stats
+		if(props.userInfo.isSuperUser)
+		{
+			stompClient.subscribe('/topic/trendings', (msg) => {
+				fillNewTrendingsFromSocket(msg.body)
+			});
+	
+			stompClient.subscribe('/topic/stats', (msg) => {
+				fillNewStatsFromSocket(msg.body)
+			});
+		}
+
 		stompClient.subscribe('/topic/messages/' + props.userInfo.login, (msg) => {
 			fillRoomInfoFromSocket(JSON.parse(msg.body))
 		});
 
 		stompClient.subscribe('/topic/ad', (msg) => {
 			fillRoomInfoFromSocket(JSON.parse(msg.body))
-		});
-
-		stompClient.subscribe('/topic/trendings', (msg) => {
-			fillNewTrendingsFromSocket(msg.body)
-		});
-
-		stompClient.subscribe('/topic/stats', (msg) => {
-			fillNewStatsFromSocket(msg.body)
 		});
 
 		stompClient.subscribe('/topic/rooms/' + props.userInfo.login, (room) => {
