@@ -37,7 +37,7 @@ const Login = (props) => {
     if (e.keyCode == 13 || e.which == 13) {
       // if username is entered enter the password
       if (loginData.username && loginData.password) {
-        console.log("Everything is correct Go for verify...", loginData)
+        // console.log("Everything is correct Go for verify...", loginData)
         verifyUser()
       } else if (loginData.username) {
         setLoginData({ ...loginData, showPasswordInput: true })
@@ -82,12 +82,12 @@ const Login = (props) => {
 		}		
 
 		//NUEVO: el nuestro, el de KOTLIN
-		console.log("CONNECTING KOTLIN BACKEND 1")
+		// console.log("CONNECTING KOTLIN BACKEND 1")
 		const res = await connectKotlinBackend(config)
-		console.log("CONNECTING KOTLIN BACKEND 2")
+		// console.log("CONNECTING KOTLIN BACKEND 2")
 
 		if (res.data.login) {
-			console.log("user authentication successful", res.data)
+			// console.log("user authentication successful", res.data)
 			setLoginData({ ...loginData, showLoading: false })
 
 			showSuccessComponent()

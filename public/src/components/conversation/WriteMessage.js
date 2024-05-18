@@ -48,7 +48,8 @@ const WriteMessage = (props) => {
 				'body': writeMessageData.message, 
 				'filename': filename,
 				'isAd': props.selectedRoomId == allConstants.adId,
-				'userId': props.userInfo.id, 
+				'userId': props.userInfo.id,
+				'userLogin': props.userInfo.login,
 				'roomId': props.selectedRoomId == allConstants.adId ? null : props.selectedRoomId})
 		});
 

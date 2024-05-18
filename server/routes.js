@@ -9,7 +9,6 @@ import { connectDbAndRunQueries } from "./dbOps.js"
 // router.use(express.static('../dist'))
 
 router.post("/login", (req, res) => {
-	console.log("CONNECTING BACKEND 1.1")
 	connectDbAndRunQueries("login", req, res)
 })
 

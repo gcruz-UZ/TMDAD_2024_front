@@ -6,7 +6,8 @@ const RoomInfo = ({
   lastMessage,
   dateInfo,
   userId,
-  userInfo,
+  userLogin,
+  userInfoId,
   setSelectedRoomId,
   activeRoomId,
   roomId,
@@ -17,13 +18,16 @@ const RoomInfo = ({
   // instantiate the Constants
   const allConstants = Constants()
   const readStyle = read == false ? "last-message unread-msg" : "last-message"
+  const readStyleRoomName = read == false ? "room-name unread-msg" : "room-name"
+  const readStyleDateInfo = read == false ? "date-info unread-msg" : "date-info"
+  const readStyleInitials = read == false ? "room-initials unread-msg" : "room-initials"
   return (
     <div
       className={activeRoomId == roomId ? "room-info active-room" : "room-info"}
       onClick={() => setSelectedRoomId(roomId, roomName)}
     >
       <div className="room-icon-div">
-        <div className="room-initials">
+        <div className={readStyleInitials}>
           {roomName.substr(0, 2)}
           {onlineRooms.includes(partnerId) ? (
             <div className="online-mark"></div>
@@ -32,15 +36,15 @@ const RoomInfo = ({
           )}
         </div>
       </div>
-      <div className="room-name">
+      <div className={readStyleRoomName}>
         {roomName}
         <div className={readStyle}>
-          {userInfo == userId
+          {userInfoId == userId
             ? `You: ${lastMessage.substr(0, 96)}`
-            : lastMessage.substr(0, 100)}
+            : `${userLogin}${lastMessage.length > 0 ? ":" : ""} ${lastMessage.substr(0, 100)}`}
         </div>
       </div>
-      <div className="date-info">{allConstants.formatDates(dateInfo)}</div>
+      <div className={readStyleDateInfo}>{allConstants.formatDates(dateInfo)}</div>
     </div>
   )
 }

@@ -439,6 +439,10 @@ input[type="text"]:focus {
   font-weight: bold;
 }
 
+/* .unread-msg::after {
+	content: " - Suffix";
+  } */
+
 .date-info {
   font-size: 0.65em;
   padding: 0.9em;

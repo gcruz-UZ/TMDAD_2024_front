@@ -44,8 +44,8 @@ const Content = (props) => {
 	// Define event listeners
 	stompClient.onConnect = (frame) => {
 		setConnected(true);
-		console.log('Connected: ' + frame);
-		console.log("onlineUser", props.userInfo.id)
+		// console.log('Connected: ' + frame);
+		// console.log("onlineUser", props.userInfo.id)
 
 		//Si soy superuser me suscribo a trendings y stats
 		if(props.userInfo.isSuperUser)

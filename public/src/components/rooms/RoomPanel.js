@@ -37,14 +37,14 @@ const RoomPanel = (props) => {
       props.newMessageFromSocket &&
       props.newMessageFromSocket.id !== lastMsgFromSocketId
     ) {
-      const { roomId, body, timeSent, userId, id } =
+      const { roomId, body, timeSent, userId, userLogin, id } =
         props.newMessageFromSocket
-      console.log(
-        "props is here",
-        id,
-        " and roomPanelData",
-        lastMsgFromSocketId
-      )
+    //   console.log(
+    //     "props is here",
+    //     id,
+    //     " and roomPanelData",
+    //     lastMsgFromSocketId
+    //   )
 
       // avoid repeated loading of rooms and save the last message id from socket
       setShouldLoadRooms(false)
@@ -55,17 +55,19 @@ const RoomPanel = (props) => {
           // adjust the necessary field if the roomId matches
           room.lastMessage = body
           room.dateInfo = timeSent
+          room.lastMessageTime = timeSent
           room.userId = userId
+          room.userLogin = userLogin
 
           // if the message is from other non active room
           if (room.read == true && room.roomId !== activeRoomId) {
             room.read = false
-            saveReadStatusToDb(room, false)
+            // saveReadStatusToDb(room, false)
           }
         }
       })
 
-      roomPanelData.rooms.sort((a, b) => {
+	  roomPanelData.rooms.sort((a, b) => {
         return new Date(b.dateInfo) - new Date(a.dateInfo)
       })
     }
@@ -75,30 +77,22 @@ const RoomPanel = (props) => {
   const loadrooms = async () => {
     if (shouldLoadrooms == true) {
       try {
-        const config = {
-          method: allConstants.method.POST,
-          url: allConstants.getRooms.replace("{id}", props.userInfo.id),
-          header: allConstants.header,
-          data: { rooms: props.userInfo.rooms },
-        }
-
-
-
-
+        // const config = {
+        //   method: allConstants.method.POST,
+        //   url: allConstants.getRooms.replace("{id}", props.userInfo.id),
+        //   header: allConstants.header,
+        //   data: { rooms: props.userInfo.rooms },
+        // }
 
         // const res = await connectBackend(config)
-
-
-
-
-
-
 		
-
-        // // // // // // sort the data based on dates
-        // // // // // res.data = res.data.sort((a, b) => {
-        // // // // //   return new Date(b.dateInfo) - new Date(a.dateInfo)
-        // // // // // })
+        // sort the data based on dates
+        // res.data = res.data.sort((a, b) => {
+        //   return new Date(b.lastMessageTime) - new Date(a.lastMessageTime)
+        // })
+		props.userInfo.rooms = props.userInfo.rooms.sort((a, b) => {
+			return new Date(b.lastMessageTime) - new Date(a.lastMessageTime)
+		  })
 
 		//Añadimos la de publi
 		const output = [{
@@ -124,39 +118,20 @@ const RoomPanel = (props) => {
 					roomName: ele.name,
 					roomId: ele.id,
 					// lastMessage: ele.lastMessage ? ele.lastMessage.body : [],
-					lastMessage: "Last message",
+					lastMessage: ele.lastMessage ? ele.lastMessage.body : "",
 					// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
-					dateInfo: "NA",
+					// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
+					dateInfo: ele.lastMessageTime,
 					// userId: ele.lastMessage ? ele.lastMessage.userId : "NA",
-					userId: "NA",
+					userId: ele.lastMessage ? ele.lastMessage.userId : "NA",
+					userLogin: ele.lastMessage ? ele.lastMessage.userLogin : "",
 					// partnerId: rooms[index].partnerId || "NA",
 					partnerId: "NA",
 					// read: rooms[index].read,
-					read: false,
+					read: ele.lastMessage ? ele.lastMessageTime < props.userInfo.lastSignIn : false,
 				})
 			})
 		}
-
-
-
-
-
-		// // output.push({
-		// // 	// roomName: rooms[index].roomName,
-		// // 	roomName: "FEDERICO",
-		// // 	// roomId: ele._id,
-		// // 	roomId: 1,
-		// // 	// lastMessage: ele.lastMessage ? ele.lastMessage.body : [],
-		// // 	lastMessage: "tu vieja",
-		// // 	// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
-		// // 	dateInfo: "NA",
-		// // 	// userId: ele.lastMessage ? ele.lastMessage.userId : "NA",
-		// // 	userId: "NA",
-		// // 	// partnerId: rooms[index].partnerId || "NA",
-		// // 	partnerId: "NA",
-		// // 	// read: rooms[index].read,
-		// // 	read: true,
-		// // })
 
         // set necessary state variables
         setRoomPanelData((prevState) => {
@@ -171,23 +146,29 @@ const RoomPanel = (props) => {
 
 	if(props.newRoomFromSocket && props.newRoomFromSocket.id !== lastRoomFromSocketId)
 	{
-		console.log("NEW ROOM")
-		console.log(props.newRoomFromSocket)
+		// console.log("NEW ROOM")
+		// console.log(props.newRoomFromSocket)
 		setLastRoomFromSocketId(props.newRoomFromSocket.id)
 		roomPanelData.rooms.push({
 			roomName: props.newRoomFromSocket.name,
 			roomId: props.newRoomFromSocket.id,
 			// lastMessage: ele.lastMessage ? ele.lastMessage.body : [],
-			lastMessage: "Last message",
+			lastMessage: props.newRoomFromSocket.lastMessage ? props.newRoomFromSocket.lastMessage.body : "",
 			// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
-			dateInfo: "NA",
+			// dateInfo: props.newRoomFromSocket.lastMessage ? props.newRoomFromSocket.lastMessage.timeSent : "NA",
+			dateInfo: props.newRoomFromSocket.lastMessageTime,
 			// userId: ele.lastMessage ? ele.lastMessage.userId : "NA",
-			userId: "NA",
+			userId: props.newRoomFromSocket.lastMessage ? props.newRoomFromSocket.lastMessage.userId : "NA",
+			userLogin: props.newRoomFromSocket.lastMessage ? props.newRoomFromSocket.lastMessage.userLogin : "",
 			// partnerId: rooms[index].partnerId || "NA",
 			partnerId: "NA",
 			// read: rooms[index].read,
 			read: false,
 		})
+
+		roomPanelData.rooms.sort((a, b) => {
+			return new Date(b.dateInfo) - new Date(a.dateInfo)
+		  })
 	}
 
 	if(props.removedRoomFromSocket && props.removedRoomFromSocket.id !== lastRemovedRoomFromSocketId)
@@ -201,37 +182,7 @@ const RoomPanel = (props) => {
     props.setSelectedRoomId(id, name)
     // set active room id for highlighting purpose
     setActiveRoomId(id)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // // // // // //changeReadStatus(id)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    changeReadStatus(id)
   }
 
   // function to change the room status from read / unread
@@ -241,29 +192,29 @@ const RoomPanel = (props) => {
     allRooms.forEach((room, index, roomArray) => {
       if (room.roomId == id && room.read == false) {
         roomArray[index].read = true
-        saveReadStatusToDb(room, true)
+        // saveReadStatusToDb(room, true)
       }
     })
 
     setRoomPanelData({ ...roomPanelData, rooms: allRooms })
   }
 
-  const saveReadStatusToDb = async (room, status) => {
-    try {
-      const config = {
-        method: allConstants.method.PUT,
-        url: allConstants.saveReadStatus,
-        data: {
-          id: props.userInfo.id,
-          roomName: room.roomName,
-          read: status,
-        },
-      }
-      await connectBackend(config)
-    } catch (err) {
-      console.log("unable to save room status", err)
-    }
-  }
+//   const saveReadStatusToDb = async (room, status) => {
+//     try {
+//       const config = {
+//         method: allConstants.method.PUT,
+//         url: allConstants.saveReadStatus,
+//         data: {
+//           id: props.userInfo.id,
+//           roomName: room.roomName,
+//           read: status,
+//         },
+//       }
+//       await connectBackend(config)
+//     } catch (err) {
+//       console.log("unable to save room status", err)
+//     }
+//   }
 
   const { userInfo, showRoomPanel, onlineRooms } = props
   const { showLoading, rooms } = roomPanelData
@@ -293,7 +244,7 @@ const RoomPanel = (props) => {
             <RoomInfo
               key={room.roomId}
               {...room}
-              userInfo={userInfo.id}
+              userInfoId={userInfo.id}
               activeRoomId={activeRoomId}
               onlineRooms={onlineRooms}
               setSelectedRoomId={setSelectedRoomId}
