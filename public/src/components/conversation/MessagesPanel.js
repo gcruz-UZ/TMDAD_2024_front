@@ -91,11 +91,12 @@ const MessagesPanel = (props) => {
     showLoading: false,
     disableTextArea: true,
     selectedRoomId: "",
+    selectedRoomName: "",
 	showMessagePanel2: true,
   })
 
   const [lastMsgSocketId, setLastMsgSocketId] = useState("")
-  const [lastRemovedRoomFromSocketId, setLastRemovedRoomFromSocketId] = useState("")
+//   const [lastRemovedRoomFromSocketId, setLastRemovedRoomFromSocketId] = useState("")
 
   // instantiate the Constants
   const allConstants = Constants()
@@ -110,7 +111,7 @@ const MessagesPanel = (props) => {
       props.selectedRoomId != messagePanelData.selectedRoomId
     ) {
       // load the messages when the nextProps is different from the present one
-      loadConversation(props.selectedRoomId)
+      loadConversation(props.selectedRoomId, props.selectedRoomName)
     }
 
 	//Necesario porq si no me daba error al cambiar de las de trends/stats a la room normal
@@ -162,7 +163,7 @@ const MessagesPanel = (props) => {
 
 
   // load the conversation of the selected friend
-  const loadConversation = async (id) => {
+  const loadConversation = async (id, roomName) => {
 	if(props.selectedRoomId == allConstants.trendingsId || props.selectedRoomId == allConstants.statsId)
 	{
 		//Es la de trends o stats
@@ -245,6 +246,7 @@ const MessagesPanel = (props) => {
 			  showLoading: true,
 			  disableTextArea: true,
 			  selectedRoomId: id,
+			  selectedRoomName: roomName,
 			  showMessagePanel2: true,
 			}
 		  })
@@ -336,21 +338,37 @@ const MessagesPanel = (props) => {
   }
 
   const processRemovedRoom = () => {
-    if (
-      props.removedRoomFromSocket &&
-      props.removedRoomFromSocket.id !== lastRemovedRoomFromSocketId
-    ) {
-      // if the removed room is from the selected room
-      if (props.removedRoomFromSocket.id == messagePanelData.selectedRoomId) {
-        setMessagePanelData((prevState) => {
+    // if (
+    //   props.removedRoomFromSocket &&
+    //   props.removedRoomFromSocket.id !== lastRemovedRoomFromSocketId
+    // ) {
+	// 	console.log("aqui")
+    //   // if the removed room is from the selected room
+    //   if (props.removedRoomFromSocket.id == messagePanelData.selectedRoomId) {
+    //     setMessagePanelData((prevState) => {
+	// 		return {
+	// 		  ...prevState,
+    // 		  selectedRoomId: "",
+	// 		  showMessagePanel2: false,
+	// 		}
+	// 	  })
+    //     setLastRemovedRoomFromSocketId(props.removedRoomFromSocket.id)
+    //   }
+    // }
+
+	if (
+		props.removedRoomFromSocket &&
+		props.removedRoomFromSocket.id == messagePanelData.selectedRoomId
+	  ) {
+		// if the removed room is from the selected room
+		setMessagePanelData((prevState) => {
 			return {
-			  ...prevState,
-			  showMessagePanel2: false,
+			...prevState,
+			selectedRoomId: "",
+			showMessagePanel2: false,
 			}
-		  })
-        setLastRemovedRoomFromSocketId(props.removedRoomFromSocket.id)
-      }
-    }
+		})
+	  }
   }
 
   const addUserToRoom = () => {
@@ -377,7 +395,7 @@ const MessagesPanel = (props) => {
 	}
   }
 
-  const { showLoading, disableTextArea, selectedRoomId, showMessagePanel2 } = messagePanelData
+  const { showLoading, disableTextArea, selectedRoomId, selectedRoomName, showMessagePanel2 } = messagePanelData
   const { userInfo, showMessagePanel } = props
   const messageStyle =
     (showMessagePanel == true && showMessagePanel2 == true) ? "message-panel" : "message-panel hide-div"
@@ -426,7 +444,7 @@ if(selectedRoomId > 0)
 {
 	messagesPanelHeader = <div className="messages-panel-header">
 							{/* <h2>{"ROOOOM NAME"}</h2> */}
-							<h2>{props.selectedRoomName}</h2>
+							<h2>{selectedRoomName}</h2>
 							{/* <button onClick={addUserToRoom}>Add User</button> */}
 							{moderator && <button onClick={openModal}>Add User</button>}
 							{moderator && <button onClick={openDeleteModal} className="delete-user">Delete User</button>}

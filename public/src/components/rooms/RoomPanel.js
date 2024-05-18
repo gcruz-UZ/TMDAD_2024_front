@@ -146,8 +146,12 @@ const RoomPanel = (props) => {
 
 	if(props.newRoomFromSocket && props.newRoomFromSocket.id !== lastRoomFromSocketId)
 	{
-		// console.log("NEW ROOM")
-		// console.log(props.newRoomFromSocket)
+		if(props.newRoomFromSocket.id === lastRemovedRoomFromSocketId)
+		{
+			setLastRemovedRoomFromSocketId("")
+		}
+
+		console.log(props.newRoomFromSocket)
 		setLastRoomFromSocketId(props.newRoomFromSocket.id)
 		roomPanelData.rooms.push({
 			roomName: props.newRoomFromSocket.name,
@@ -156,7 +160,7 @@ const RoomPanel = (props) => {
 			lastMessage: props.newRoomFromSocket.lastMessage ? props.newRoomFromSocket.lastMessage.body : "",
 			// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
 			// dateInfo: props.newRoomFromSocket.lastMessage ? props.newRoomFromSocket.lastMessage.timeSent : "NA",
-			dateInfo: props.newRoomFromSocket.lastMessageTime,
+			dateInfo: props.newRoomFromSocket.lastMessageTime ? props.newRoomFromSocket.lastMessageTime : "NA",
 			// userId: ele.lastMessage ? ele.lastMessage.userId : "NA",
 			userId: props.newRoomFromSocket.lastMessage ? props.newRoomFromSocket.lastMessage.userId : "NA",
 			userLogin: props.newRoomFromSocket.lastMessage ? props.newRoomFromSocket.lastMessage.userLogin : "",
@@ -173,6 +177,11 @@ const RoomPanel = (props) => {
 
 	if(props.removedRoomFromSocket && props.removedRoomFromSocket.id !== lastRemovedRoomFromSocketId)
 	{
+		if(props.removedRoomFromSocket.id === lastRoomFromSocketId)
+		{
+			setLastRoomFromSocketId("")
+		}
+
 		setLastRemovedRoomFromSocketId(props.removedRoomFromSocket.id)
 		roomPanelData.rooms = roomPanelData.rooms.filter(room => room.roomId != props.removedRoomFromSocket.id)
 	}
