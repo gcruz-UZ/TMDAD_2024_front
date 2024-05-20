@@ -85,7 +85,7 @@ const CreateChatRoom = (props) => {
 
   return (
     <div>
-      <span onClick={openModal} style={{ cursor: 'pointer', color: 'blue', marginLeft: '20px' }}>Create New Chat Room</span>
+      <span onClick={openModal} style={{ cursor: 'pointer', color: 'white', textDecoration: 'underline', marginLeft: '20px' }}>Create New Chat Room</span>
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="modal" overlayClassName="overlay">
         <h2>Create New Chat Room</h2>
 		{users.length === 0 ? (
