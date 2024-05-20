@@ -105,16 +105,6 @@ const RoomPanel = (props) => {
 	
 		const res = await connectKotlinBackend(config)
 
-		if(res.data)
-			{
-				console.log("hay")
-			}
-			else
-			{
-				console.log("es empty")
-
-			}
-
 		//Añadimos la de publi
 		const output = [{
 			isAd: true,
@@ -125,7 +115,8 @@ const RoomPanel = (props) => {
 			// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
 			dateInfo: res.data ? res.data.timeSent : "NA",
 			// userId: ele.lastMessage ? ele.lastMessage.userId : "NA",
-			userId: res.data ? res.data.userLogin : "NA",
+			userId: res.data ? res.data.userId : "NA",
+			userLogin: res.data ? res.data.userLogin : "",
 			// partnerId: rooms[index].partnerId || "NA",
 			partnerId: "NA",
 			// read: rooms[index].read,
