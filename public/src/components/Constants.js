@@ -20,11 +20,12 @@ const Constants = () => {
 	getKotlinCandidateUsers: `${kotlinUrl}/rooms/{id}/candidate-users`,
 	deleteKotlinRoom: `${kotlinUrl}/rooms/{id}`,
 	deleteKotlinUserInRoom: `${kotlinUrl}/rooms/{id}/user/{login}`,
+	updateLastAccess: `${kotlinUrl}/users/{userId}/room/{roomId}/lastAccess`,
 	createKotlinRoom: `${kotlinUrl}/rooms`,
     getRooms: `${url}/getrooms/{id}`,
     saveReadStatus: `${url}/updateroomreadstatus`,
 
-	uploadFile: `${kotlinUrl}/messages/fileUpload`,
+	uploadFile: `${kotlinUrl}/messages/file`,
 
     // the Content-Type
     header: { "Content-Type": "application/json" },

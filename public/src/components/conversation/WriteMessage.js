@@ -19,7 +19,7 @@ const WriteMessage = (props) => {
   const sendMessage = (e) => {
     if ((e.keyCode == 13 || e.which == 13) && !e.ctrlKey) {
       // emit the message
-      if (writeMessageData.message.length > 0) {
+      if (writeMessageData.message.length > 0 || file != null) {
 		let filename = ""
 
 		if(file != null)
@@ -27,7 +27,12 @@ const WriteMessage = (props) => {
 			filename = file.name
 			const formData = new FormData();
         	formData.append("file", file);
-
+        	formData.append("body", writeMessageData.message);
+        	formData.append("filename", filename);
+        	formData.append("isAd", props.selectedRoomId == allConstants.adId);
+        	formData.append("userId", props.userInfo.id);
+        	formData.append("userLogin", props.userInfo.login);
+        	formData.append("roomId", props.selectedRoomId == allConstants.adId ? null : props.selectedRoomId);
 
 			const config = {
 				withCredentials: true,
@@ -41,17 +46,20 @@ const WriteMessage = (props) => {
 
 			setFile(null)
 		}
-
-		stompClient.publish({
-			destination: "/app/message",
-			body: JSON.stringify({
-				'body': writeMessageData.message, 
-				'filename': filename,
-				'isAd': props.selectedRoomId == allConstants.adId,
-				'userId': props.userInfo.id,
-				'userLogin': props.userInfo.login,
-				'roomId': props.selectedRoomId == allConstants.adId ? null : props.selectedRoomId})
-		});
+		else
+		{
+			//Mensaje normal, mandamos simplemente por websocket
+			stompClient.publish({
+				destination: "/app/message",
+				body: JSON.stringify({
+					'body': writeMessageData.message, 
+					'filename': filename,
+					'isAd': props.selectedRoomId == allConstants.adId,
+					'userId': props.userInfo.id,
+					'userLogin': props.userInfo.login,
+					'roomId': props.selectedRoomId == allConstants.adId ? null : props.selectedRoomId})
+			});
+		}
 
 		// // // // // // // // fetch(`http://localhost:8080/api/messages/download/document.pdf`, {
 		// // // // // // // // 	credentials: 'include'  // Include cookies with the request
@@ -108,6 +116,10 @@ const WriteMessage = (props) => {
 		// console.log(event.target.files[0]);
 	};
 
+	const onInputClick = (event) => {
+		event.target.value = ''
+	}
+
 	const onFileUpload = () => {
         const formData = new FormData();
         formData.append("file", file);
@@ -121,11 +133,13 @@ const WriteMessage = (props) => {
         // .catch(error => console.error('Error uploading file', error));
     };
 
+let buttonFilenameText = file != null ? ": " + file.name : ""
+
   return (
 	<div className="chat-input-container">
 		<label className="file-upload-button">
-			Upload File
-			<input type="file" className="file-upload-input" onChange={onFileChange} style={{display: 'none'}} />
+			Upload File{buttonFilenameText}
+			<input type="file" className="file-upload-input" onClick={onInputClick} onChange={onFileChange} style={{display: 'none'}} />
 		</label>
 		<textarea
 			rows="3"

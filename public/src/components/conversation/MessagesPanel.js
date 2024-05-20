@@ -222,6 +222,11 @@ const MessagesPanel = (props) => {
 			}
 	  
 		  const res = await connectKotlinBackend(config)
+
+		  //Los ordenamos
+		  let sortedMessages = res.data.sort((a, b) => {
+			return new Date(a.timeSent) - new Date(b.timeSent)
+		  })
 	  
 			// set the messages field of the state with the data
 			setMessagePanelData((prevState) => {
@@ -230,6 +235,7 @@ const MessagesPanel = (props) => {
 				showLoading: false,
 				disableTextArea: false,
 				messages: res.data,
+				messages: sortedMessages,
 				showMessagePanel2: true,
 			  }
 			})
@@ -250,6 +256,32 @@ const MessagesPanel = (props) => {
 			  showMessagePanel2: true,
 			}
 		  })
+		  //Actualizamos tiempo de ultimo acceso a la room
+			try {
+				const config = {
+				withCredentials: true,
+				method: allConstants.method.PUT,
+				url: allConstants.updateLastAccess.replace("{userId}", props.userInfo.id).replace("{roomId}", id),
+				header: allConstants.header,
+				}
+		
+			const res = connectKotlinBackend(config)
+		
+				// // set the messages field of the state with the data
+				// setMessagePanelData((prevState) => {
+				//   return {
+				// 	...prevState,
+				// 	showLoading: false,
+				// 	disableTextArea: false,
+				// 	messages: res.data,
+				// 	showMessagePanel2: true,
+				//   }
+				// })
+			} catch (err) {
+				console.log("Error occurred...", err)
+			}
+
+
 		  try {
 			const config = {
 			  withCredentials: true,
@@ -259,6 +291,11 @@ const MessagesPanel = (props) => {
 			}
 	  
 		  const res = await connectKotlinBackend(config)
+
+		  //Los ordenamos
+		  let sortedMessages = res.data.sort((a, b) => {
+			return new Date(a.timeSent) - new Date(b.timeSent)
+		  })
 	  
 			// set the messages field of the state with the data
 			setMessagePanelData((prevState) => {
@@ -266,7 +303,7 @@ const MessagesPanel = (props) => {
 				...prevState,
 				showLoading: false,
 				disableTextArea: false,
-				messages: res.data,
+				messages: sortedMessages,
 				showMessagePanel2: true,
 			  }
 			})
@@ -331,6 +368,33 @@ const MessagesPanel = (props) => {
             ],
           }
         })
+
+		//Actualizamos tiempo de ultimo acceso a la room
+		try {
+			const config = {
+			  withCredentials: true,
+			  method: allConstants.method.PUT,
+			  url: allConstants.updateLastAccess.replace("{userId}", props.userInfo.id).replace("{roomId}", roomId),
+			  header: allConstants.header,
+			}
+	  
+		  const res = connectKotlinBackend(config)
+	  
+			// // set the messages field of the state with the data
+			// setMessagePanelData((prevState) => {
+			//   return {
+			// 	...prevState,
+			// 	showLoading: false,
+			// 	disableTextArea: false,
+			// 	messages: res.data,
+			// 	showMessagePanel2: true,
+			//   }
+			// })
+		  } catch (err) {
+			console.log("Error occurred...", err)
+		  }
+
+
         setLastMsgSocketId(id)
         scrollToBottom()
       }

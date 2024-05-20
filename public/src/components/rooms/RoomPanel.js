@@ -37,7 +37,7 @@ const RoomPanel = (props) => {
       props.newMessageFromSocket &&
       props.newMessageFromSocket.id !== lastMsgFromSocketId
     ) {
-      const { roomId, body, timeSent, userId, userLogin, id } =
+      const { roomId, body, filename, timeSent, userId, userLogin, id } =
         props.newMessageFromSocket
     //   console.log(
     //     "props is here",
@@ -53,7 +53,7 @@ const RoomPanel = (props) => {
       roomPanelData.rooms.map((room) => {
         if (room.roomId == roomId) {
           // adjust the necessary field if the roomId matches
-          room.lastMessage = body
+          room.lastMessage = (body.length == 0 && filename.length > 0) ? "(file)" : body
           room.dateInfo = timeSent
           room.lastMessageTime = timeSent
           room.userId = userId
@@ -118,7 +118,7 @@ const RoomPanel = (props) => {
 					roomName: ele.name,
 					roomId: ele.id,
 					// lastMessage: ele.lastMessage ? ele.lastMessage.body : [],
-					lastMessage: ele.lastMessage ? ele.lastMessage.body : "",
+					lastMessage: ele.lastMessage ? ((ele.lastMessage.body.length == 0 && ele.lastMessage.filename.length > 0) ? "(file)" : ele.lastMessage.body) : "",
 					// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
 					// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
 					dateInfo: ele.lastMessageTime,
@@ -128,7 +128,8 @@ const RoomPanel = (props) => {
 					// partnerId: rooms[index].partnerId || "NA",
 					partnerId: "NA",
 					// read: rooms[index].read,
-					read: ele.lastMessage ? ele.lastMessageTime < props.userInfo.lastSignIn : false,
+					// read: ele.lastMessage ? ele.lastMessageTime < props.userInfo.lastSignIn : false,
+					read: ele.lastMessage ? ele.lastMessageTime < ele.userLastAccess : false,
 				})
 			})
 		}
@@ -157,7 +158,7 @@ const RoomPanel = (props) => {
 			roomName: props.newRoomFromSocket.name,
 			roomId: props.newRoomFromSocket.id,
 			// lastMessage: ele.lastMessage ? ele.lastMessage.body : [],
-			lastMessage: props.newRoomFromSocket.lastMessage ? props.newRoomFromSocket.lastMessage.body : "",
+			lastMessage: props.newRoomFromSocket.lastMessage ? ((props.newRoomFromSocket.lastMessage.body.length == 0 && props.newRoomFromSocket.lastMessage.filename.length > 0) ? "(file)" : props.newRoomFromSocket.lastMessage.body) : "",
 			// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
 			// dateInfo: props.newRoomFromSocket.lastMessage ? props.newRoomFromSocket.lastMessage.timeSent : "NA",
 			dateInfo: props.newRoomFromSocket.lastMessageTime ? props.newRoomFromSocket.lastMessageTime : "NA",
