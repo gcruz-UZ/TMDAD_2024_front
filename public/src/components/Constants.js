@@ -10,6 +10,7 @@ const Constants = () => {
   return {
     // all the URLs
     url,
+	kotlinWsUrl,
     login: `${url}/login`,
     kotlinLogin: `${kotlinUrl}/login`,
     kotlinSignin: `${kotlinAuthUrl}/signin`,
