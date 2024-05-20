@@ -7,6 +7,7 @@ import Loading from "../Loading"
 // Constants
 import Constants from "../Constants"
 import { connectBackend } from "../connectBackend"
+import { connectKotlinBackend } from "../connectKotlinBackend"
 
 const RoomPanel = (props) => {
   // Initialize the initial state and its modifier function
@@ -94,21 +95,41 @@ const RoomPanel = (props) => {
 			return new Date(b.lastMessageTime) - new Date(a.lastMessageTime)
 		  })
 
+		//Obtenemos ultimo mensaje publi
+		const config = {
+			withCredentials: true,
+			method: allConstants.method.GET,
+			url: allConstants.getKotlinLastAd,
+			header: allConstants.header,
+		}
+	
+		const res = await connectKotlinBackend(config)
+
+		if(res.data)
+			{
+				console.log("hay")
+			}
+			else
+			{
+				console.log("es empty")
+
+			}
+
 		//Añadimos la de publi
 		const output = [{
 			isAd: true,
 			roomName: "PUBLICIDAD",
 			roomId: allConstants.adId,
 			// lastMessage: ele.lastMessage ? ele.lastMessage.body : [],
-			lastMessage: "Last message",
+			lastMessage: res.data ? ((res.data.body.length == 0 && res.data.filename.length > 0) ? "(file)" : res.data.body) : "",
 			// dateInfo: ele.lastMessage ? ele.lastMessage.timeSent : "NA",
-			dateInfo: "NA",
+			dateInfo: res.data ? res.data.timeSent : "NA",
 			// userId: ele.lastMessage ? ele.lastMessage.userId : "NA",
-			userId: "NA",
+			userId: res.data ? res.data.userLogin : "NA",
 			// partnerId: rooms[index].partnerId || "NA",
 			partnerId: "NA",
 			// read: rooms[index].read,
-			read: false,
+			read: res.data ? res.data.timeSent < props.userInfo.lastSignIn : false,
 		}]
 
 		if (props.userInfo.rooms.length > 0) {
