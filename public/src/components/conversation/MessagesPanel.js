@@ -538,7 +538,8 @@ else
 //En funcion de si hemos escogido trends o stats no mostramos mensajes ni cuadro de escritura
 if(selectedRoomId == allConstants.trendingsId)
 {
-	messagesPanelBody = props.newTrendingsFromSocket
+	// messagesPanelBody = props.newTrendingsFromSocket
+	messagesPanelBody = props.newTrendingsFromSocket.split(',').map(m => (`<p>${m.trim()}</p>`)).join('');
 	messagesPanelWrite = ""
 }
 else if(selectedRoomId == allConstants.statsId)
