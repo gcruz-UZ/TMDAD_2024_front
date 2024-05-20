@@ -112,6 +112,7 @@ const WriteMessage = (props) => {
   
 
 	const onFileChange = event => {
+		console.log("size " + event.target.files[0].size)
 		setFile(event.target.files[0]);
 		// console.log(event.target.files[0]);
 	};
