@@ -4,7 +4,7 @@ const Constants = () => {
 //   const kotlinWsUrl = 'ws://localhost:8080/ws'
 //   const kotlinUrl = "http://localhost:8080/api"
 //   const kotlinAuthUrl = "http://localhost:8080/api/auth"
-  const kotlinWsUrl = 'ws://tmdad2024-cbf9ecbfe423.herokuapp.com/ws'
+  const kotlinWsUrl = 'wss://tmdad2024-cbf9ecbfe423.herokuapp.com/ws'
   const kotlinUrl = "https://tmdad2024-cbf9ecbfe423.herokuapp.com/api"
   const kotlinAuthUrl = "https://tmdad2024-cbf9ecbfe423.herokuapp.com/api/auth"
   return {
