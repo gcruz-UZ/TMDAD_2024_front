@@ -9,7 +9,7 @@ import Constants from "../Constants"
 
 Modal.setAppElement('#app'); // Correctly set app element to prevent accessibility issues
 
-const DeleteUserModal = ({ isOpen, onRequestClose, onSubmit, selectedRoomId }) => {
+const DeleteUserModal = ({ isOpen, onRequestClose, onSubmit, selectedRoomId, userLogin }) => {
   const [users, setUsers] = useState([]);
 //   const [selectedUsers, setSelectedUsers] = useState([]);
 const [selectedUsers, setSelectedUsers] = useState([]);
@@ -99,7 +99,7 @@ const [selectedUsers, setSelectedUsers] = useState([]);
 					<div>
 						<label>Select Users To Delete:</label>
 						<select multiple value={selectedUsers} onChange={handleUserSelectChange}>
-						{users/*.filter(user => user.login !== userlogin)*/.map(user => (
+						{users.filter(user => user.login !== userlogin).map(user => (
 							<option key={user.id} value={user.login}>{user.login}</option>
 						))}
 						</select>

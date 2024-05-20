@@ -524,6 +524,7 @@ if(selectedRoomId > 0)
 								onRequestClose={closeDeleteModal}
 								onSubmit={submitDeletedUsers}
 								selectedRoomId = {selectedRoomId}
+								userLogin = {userInfo.login}
 							/>
 						</div>
 }
