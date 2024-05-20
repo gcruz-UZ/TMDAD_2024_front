@@ -33,7 +33,7 @@ const Message = ({ id, body, timeSent, userId, userLogin, filename, userInfo }) 
 					// 		window.URL.revokeObjectURL(url);  // Clean up the URL object
 					// 	})
 					// 	.catch(error => console.error('Error downloading the file:', error));
-					fetch(`http://localhost:8080/api/messages/${id}/download`, {
+					fetch(allConstants.downloadKotlinFile.replace("{id}", id), {
 						credentials: 'include'  // Include cookies with the request
 					})
 						.then(response => response.blob())

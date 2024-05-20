@@ -32,7 +32,8 @@ const Content = (props) => {
     // onMessageArrival()
 
 	const stompClient = new Client({
-		brokerURL: 'ws://localhost:8080/ws',
+		// brokerURL: 'ws://localhost:8080/ws',
+		brokerURL: allConstants.kotlinWsUrl,
 		connectHeaders: {
 			"Authorization": "Bearer " + props.userInfo.token
 		  },
