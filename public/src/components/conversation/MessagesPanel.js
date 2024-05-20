@@ -539,7 +539,13 @@ else
 if(selectedRoomId == allConstants.trendingsId)
 {
 	// messagesPanelBody = props.newTrendingsFromSocket
-	messagesPanelBody = props.newTrendingsFromSocket.length > 0 ? props.newTrendingsFromSocket.split(',').map(m => (`<p>${m.trim()}</p>`)).join('') : ""
+	if(props.newTrendingsFromSocket)
+	{
+		if(props.newTrendingsFromSocket.length > 0)
+		{
+			messagesPanelBody = props.newTrendingsFromSocket.split(',').map(m => (`<p>${m.trim()}</p>`)).join('')
+		}
+	}
 	messagesPanelWrite = ""
 }
 else if(selectedRoomId == allConstants.statsId)
