@@ -112,7 +112,13 @@ const WriteMessage = (props) => {
   
 
 	const onFileChange = event => {
-		console.log("size " + event.target.files[0].size)
+		if((event.target.files[0].size / (1024*1024)) > 20)
+		{
+			alert("No se permiten archivos superiores a 20MB de tamaño");
+			event.target.value = ''
+			return
+		}
+		
 		setFile(event.target.files[0]);
 		// console.log(event.target.files[0]);
 	};
