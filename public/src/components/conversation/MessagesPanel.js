@@ -470,6 +470,12 @@ const MessagesPanel = (props) => {
 
 // console.log("oli oli")
 
+const messageContainer = document.getElementById("messageContainer");
+if(messageContainer)
+{
+	messageContainer.innerHTML = "";
+}
+
 let messagesPanelBody = <div className="show-messages">
 	{showLoading == true ? (
 	<Loading />
@@ -536,6 +542,7 @@ else
 }
 
 //En funcion de si hemos escogido trends o stats no mostramos mensajes ni cuadro de escritura
+let trending = false
 if(selectedRoomId == allConstants.trendingsId)
 {
 	// messagesPanelBody = props.newTrendingsFromSocket
@@ -543,7 +550,15 @@ if(selectedRoomId == allConstants.trendingsId)
 	{
 		if(props.newTrendingsFromSocket.length > 0)
 		{
-			messagesPanelBody = props.newTrendingsFromSocket.split(',').map(m => (`<p>${m.trim()}</p>`)).join('')
+			// messagesPanelBody = props.newTrendingsFromSocket.split(',').map(m => (`<p>${m.trim()}</p>`)).join('')
+			let messagesPanelBodyyyy = `<p>`
+			// props.newTrendingsFromSocket.split(',').map((m) => messagesPanelBody.push((<p>{m.trim()}</p>))).join('')
+			// props.newTrendingsFromSocket.split(',').map((m, index) => messagesPanelBody.push((<div key={index}>{m.trim() + "ho\nla"}</div>)))
+			props.newTrendingsFromSocket.split(',').map((m, index) => messagesPanelBodyyyy = messagesPanelBodyyyy + `${m.trim()}`+`<br/>`)
+			messagesPanelBodyyyy = messagesPanelBodyyyy + `</p>`
+			const messageContainer = document.getElementById("messageContainer");
+			messageContainer.innerHTML = messagesPanelBodyyyy;
+			trending = true
 		}
 	}
 	messagesPanelWrite = ""
@@ -557,7 +572,8 @@ else if(selectedRoomId == allConstants.statsId)
   return (
     <div className={messageStyle}>
 	  {messagesPanelHeader}
-      {messagesPanelBody}
+      {trending ? "" : messagesPanelBody}
+	  <div id="messageContainer"></div>
       {messagesPanelWrite}
     </div>
   )
