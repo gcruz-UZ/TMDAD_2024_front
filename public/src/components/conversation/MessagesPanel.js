@@ -98,6 +98,9 @@ const MessagesPanel = (props) => {
   const [lastMsgSocketId, setLastMsgSocketId] = useState("")
 //   const [lastRemovedRoomFromSocketId, setLastRemovedRoomFromSocketId] = useState("")
 
+const [trendingOrStats, setTrendingsOrStats] = useState(false)
+
+
   // instantiate the Constants
   const allConstants = Constants()
   const messageEnd = useRef(null)
@@ -473,6 +476,7 @@ const MessagesPanel = (props) => {
 const messageContainer = document.getElementById("messageContainer");
 if(messageContainer && selectedRoomId != allConstants.statsId && selectedRoomId != allConstants.trendingsId)
 {
+	setTrendingsOrStats(false)
 	messageContainer.innerHTML = "";
 }
 
@@ -542,7 +546,7 @@ else
 }
 
 //En funcion de si hemos escogido trends o stats no mostramos mensajes ni cuadro de escritura
-let trendingOrStats = false
+// let trendingOrStats = false
 if(selectedRoomId == allConstants.trendingsId)
 {
 	// messagesPanelBody = props.newTrendingsFromSocket
@@ -558,7 +562,8 @@ if(selectedRoomId == allConstants.trendingsId)
 			messagesPanelBodyyyy = messagesPanelBodyyyy + `</p>`
 			const messageContainer = document.getElementById("messageContainer");
 			messageContainer.innerHTML = messagesPanelBodyyyy;
-			trendingOrStats = true
+			// trendingOrStats = true
+			setTrendingsOrStats(true)
 		}
 		// else
 		// {
@@ -592,7 +597,8 @@ else if(selectedRoomId == allConstants.statsId)
 			messagesPanelBodyyyy = messagesPanelBodyyyy + `</p>`
 			const messageContainer = document.getElementById("messageContainer");
 			messageContainer.innerHTML = messagesPanelBodyyyy;
-			trendingOrStats = true
+			// trendingOrStats = true
+			setTrendingsOrStats(true)
 		}
 		// else
 		// {
