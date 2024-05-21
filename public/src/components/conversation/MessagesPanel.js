@@ -542,7 +542,7 @@ else
 }
 
 //En funcion de si hemos escogido trends o stats no mostramos mensajes ni cuadro de escritura
-let trending = false
+let trendingOrStats = false
 if(selectedRoomId == allConstants.trendingsId)
 {
 	// messagesPanelBody = props.newTrendingsFromSocket
@@ -551,28 +551,43 @@ if(selectedRoomId == allConstants.trendingsId)
 		if(props.newTrendingsFromSocket.length > 0)
 		{
 			// messagesPanelBody = props.newTrendingsFromSocket.split(',').map(m => (`<p>${m.trim()}</p>`)).join('')
-			let messagesPanelBodyyyy = `<p>`
+			let messagesPanelBodyyyy = `<p>*** TRENDING TOPICS ***<br/>`
 			// props.newTrendingsFromSocket.split(',').map((m) => messagesPanelBody.push((<p>{m.trim()}</p>))).join('')
 			// props.newTrendingsFromSocket.split(',').map((m, index) => messagesPanelBody.push((<div key={index}>{m.trim() + "ho\nla"}</div>)))
 			props.newTrendingsFromSocket.split(',').map((m, index) => messagesPanelBodyyyy = messagesPanelBodyyyy + `${m.trim()}`+`<br/>`)
 			messagesPanelBodyyyy = messagesPanelBodyyyy + `</p>`
 			const messageContainer = document.getElementById("messageContainer");
 			messageContainer.innerHTML = messagesPanelBodyyyy;
-			trending = true
+			trendingOrStats = true
 		}
 	}
 	messagesPanelWrite = ""
 }
 else if(selectedRoomId == allConstants.statsId)
 {
-	messagesPanelBody = props.newStatsFromSocket
+	// messagesPanelBody = props.newStatsFromSocket
+	if(props.newStatsFromSocket)
+	{
+		if(props.newStatsFromSocket.length > 0)
+		{
+			// messagesPanelBody = props.newTrendingsFromSocket.split(',').map(m => (`<p>${m.trim()}</p>`)).join('')
+			let messagesPanelBodyyyy = `<p>*** STATS ***<br/>`
+			// props.newTrendingsFromSocket.split(',').map((m) => messagesPanelBody.push((<p>{m.trim()}</p>))).join('')
+			// props.newTrendingsFromSocket.split(',').map((m, index) => messagesPanelBody.push((<div key={index}>{m.trim() + "ho\nla"}</div>)))
+			props.newStatsFromSocket.split(',').map((m, index) => messagesPanelBodyyyy = messagesPanelBodyyyy + `${m.trim()}`+`<br/>`)
+			messagesPanelBodyyyy = messagesPanelBodyyyy + `</p>`
+			const messageContainer = document.getElementById("messageContainer");
+			messageContainer.innerHTML = messagesPanelBodyyyy;
+			trendingOrStats = true
+		}
+	}
 	messagesPanelWrite = ""
 }
 
   return (
     <div className={messageStyle}>
 	  {messagesPanelHeader}
-      {trending ? "" : messagesPanelBody}
+      {trendingOrStats ? "" : messagesPanelBody}
 	  <div id="messageContainer"></div>
       {messagesPanelWrite}
     </div>
