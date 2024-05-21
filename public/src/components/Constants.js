@@ -54,18 +54,26 @@ const Constants = () => {
       const theWeek = makeFormattedWeek()
 	  const receivedDate = new Date(dateReceived);
   	  receivedDate.setHours(receivedDate.getHours() + 2); // Add 2 hours
+		let receivedDateStr = receivedDate.toISOString()
 
 
-      if (theWeek[dateReceived.substring(0, dateReceived.indexOf("T"))]) {
-        let formattedDate =
-          theWeek[dateReceived.substring(0, dateReceived.indexOf("T"))]
-        return formattedDate == "Today"
-          ? dateReceived.substr(dateReceived.indexOf("T") + 1, 5)
-          : formattedDate
-      } else {
+    //   if (theWeek[dateReceived.substring(0, dateReceived.indexOf("T"))]) {
+    //     let formattedDate =
+    //       theWeek[dateReceived.substring(0, dateReceived.indexOf("T"))]
+    //     return formattedDate == "Today"
+    //       ? dateReceived.substr(dateReceived.indexOf("T") + 1, 5)
+    //       : formattedDate
+    //   } else {
         // return `${new Date(dateReceived).getDate()}/${
         //   new Date(dateReceived).getMonth() + 1
         // }/${new Date(dateReceived).getFullYear()}`
+	if (theWeek[receivedDateStr.substring(0, receivedDateStr.indexOf("T"))]) {
+		let formattedDate =
+			theWeek[receivedDateStr.substring(0, receivedDateStr.indexOf("T"))]
+		return formattedDate == "Today"
+			? receivedDateStr.substr(receivedDateStr.indexOf("T") + 1, 5)
+			: formattedDate
+		} else {
 		return `${receivedDate.getDate()}/${
 			receivedDate.getMonth() + 1
 		}/${receivedDate.getFullYear()}`
