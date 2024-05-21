@@ -16,7 +16,7 @@ const UserGreeting = (props) => {
 
   return (
     <div className="user-info" onClick={showHideLogout}>
-      <span className="user-greeting">Hi {username}</span>
+      <span className="user-greeting" style={{ textDecoration: 'underline'}}>Hi {username}</span>
       {showLogout == true && <Logout />}
     </div>
   )
