@@ -560,6 +560,20 @@ if(selectedRoomId == allConstants.trendingsId)
 			messageContainer.innerHTML = messagesPanelBodyyyy;
 			trendingOrStats = true
 		}
+		else
+		{
+			if(messageContainer)
+			{
+				messageContainer.innerHTML = "";
+			}
+		}
+	}
+	else
+	{
+		if(messageContainer)
+		{
+			messageContainer.innerHTML = "";
+		}
 	}
 	messagesPanelWrite = ""
 }
@@ -579,6 +593,20 @@ else if(selectedRoomId == allConstants.statsId)
 			const messageContainer = document.getElementById("messageContainer");
 			messageContainer.innerHTML = messagesPanelBodyyyy;
 			trendingOrStats = true
+		}
+		else
+		{
+			if(messageContainer)
+			{
+				messageContainer.innerHTML = "";
+			}
+		}
+	}
+	else
+	{
+		if(messageContainer)
+		{
+			messageContainer.innerHTML = "";
 		}
 	}
 	messagesPanelWrite = ""
