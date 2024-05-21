@@ -52,6 +52,10 @@ const Constants = () => {
 
     formatDates: (dateReceived) => {
       const theWeek = makeFormattedWeek()
+	  const receivedDate = new Date(dateReceived);
+  	  receivedDate.setHours(receivedDate.getHours() + 2); // Add 2 hours
+
+
       if (theWeek[dateReceived.substring(0, dateReceived.indexOf("T"))]) {
         let formattedDate =
           theWeek[dateReceived.substring(0, dateReceived.indexOf("T"))]
@@ -59,9 +63,12 @@ const Constants = () => {
           ? dateReceived.substr(dateReceived.indexOf("T") + 1, 5)
           : formattedDate
       } else {
-        return `${new Date(dateReceived).getDate()}/${
-          new Date(dateReceived).getMonth() + 1
-        }/${new Date(dateReceived).getFullYear()}`
+        // return `${new Date(dateReceived).getDate()}/${
+        //   new Date(dateReceived).getMonth() + 1
+        // }/${new Date(dateReceived).getFullYear()}`
+		return `${receivedDate.getDate()}/${
+			receivedDate.getMonth() + 1
+		}/${receivedDate.getFullYear()}`
       }
     },
   }
