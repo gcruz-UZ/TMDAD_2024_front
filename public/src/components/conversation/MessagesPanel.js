@@ -477,6 +477,10 @@ const messageContainer = document.getElementById("messageContainer");
 if(messageContainer && selectedRoomId != allConstants.statsId && selectedRoomId != allConstants.trendingsId)
 {
 	// setTrendingsOrStats(false)
+	if(trendingOrStats)
+	{
+		setTrendingsOrStats(false)
+	}
 	messageContainer.innerHTML = "";
 }
 
@@ -563,7 +567,11 @@ if(selectedRoomId == allConstants.trendingsId)
 			const messageContainer = document.getElementById("messageContainer");
 			messageContainer.innerHTML = messagesPanelBodyyyy;
 			// trendingOrStats = true
-			setTrendingsOrStats(true)
+			// setTrendingsOrStats(true)
+			if(!trendingOrStats)
+			{
+				setTrendingsOrStats(true)
+			}
 		}
 		// else
 		// {
@@ -598,7 +606,11 @@ else if(selectedRoomId == allConstants.statsId)
 			const messageContainer = document.getElementById("messageContainer");
 			messageContainer.innerHTML = messagesPanelBodyyyy;
 			// trendingOrStats = true
-			setTrendingsOrStats(true)
+			// setTrendingsOrStats(true)
+			if(!trendingOrStats)
+			{
+				setTrendingsOrStats(true)
+			}
 		}
 		// else
 		// {
