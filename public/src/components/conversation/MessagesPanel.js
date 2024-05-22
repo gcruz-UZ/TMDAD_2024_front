@@ -476,7 +476,7 @@ const [trendingOrStats, setTrendingsOrStats] = useState(false)
 const messageContainer = document.getElementById("messageContainer");
 if(messageContainer && selectedRoomId != allConstants.statsId && selectedRoomId != allConstants.trendingsId)
 {
-	setTrendingsOrStats(false)
+	// setTrendingsOrStats(false)
 	messageContainer.innerHTML = "";
 }
 
